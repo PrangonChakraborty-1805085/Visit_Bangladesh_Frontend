@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-size: medium;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.hero {
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../../public/images/banner.jpg);
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+}
+
+.form-box {
+    width: 390px;
+    height: 470px;
+    margin: 6% auto;
+    background: white;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.button-box {
+    width: 300px;
+    margin: 55px 35px;
+    position: relative;
+    box-shadow: 0 0 20px 9px #ff61241f;
+    border-radius: 30px;
+    text-align: center;
+    background-color: black;
+    font-size: large;
+}
+
+.submit-btn {
+    margin: auto;
+    width: 220px;
+    text-align: center;
+    padding: 10px 30px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    outline: none;
+    position: relative;
+}
+
+.headline {
+    width: 300px;
+    margin: 10px auto;
+    position: relative;
+    border-radius: 30px;
+    background: white;
+    text-align: center;
+    font-size: x-large;
+    font-weight: 600;
+}
+
+.input-group {
+    position: relative;
+    width: 280px;
+    transition: 0.5s;
+}
+
+.input-field {
+    width: 100%;
+    padding: 2% 5%;
+    margin: 2px 35px;
+    border-left: 1px solid #999;
+    border-top: 1px solid #999;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+    outline: black;
+    border-radius: 10px;
+}
+
+.input-field-guests {
+    width: 100%;
+    padding: 2% 5%;
+    margin: 10px 35px;
+    border-left: 1px solid #999;
+    border-top: 1px solid #999;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+    outline: black;
+    border-radius: 10px;
+}
+
+.add-destination {
+    width: 100%;
+    padding: 0;
+    margin: 7px 35px 2px;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 0;
+    text-align: left;
+    font-size: medium;
+    background-color: transparent;
+    color: blue;
+}
+
+.start-date-field {
+    width: 100%;
+    padding: 2% 5%;
+    margin: 1px 35px;
+    border-left: 1px solid #999;
+    border-top: 1px solid #999;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+    outline: black;
+    border-radius: 10px;
+}
+
+.end-date-field {
+    width: 100%;
+    padding: 2% 5%;
+    margin: 1px 35px;
+    border-left: 1px solid #999;
+    border-top: 1px solid #999;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+    outline: black;
+    border-radius: 10px;
+}
+
+.activities-preferences {
+    width: 300px;
+    margin: 10px auto;
+    position: relative;
+    border-radius: 30px;
+    background: white;
+    text-align: center;
+    font-size: medium;
+    font-weight: 600;
+}
+
+.checkboxes {
+    margin: 13px 20px;
+}
+
+datalist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+datalist option {
+    padding: 10px;
+}
