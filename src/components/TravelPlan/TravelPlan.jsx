@@ -1,7 +1,13 @@
 import React from 'react';
 import "./travelplan.css"
+import { useLocation } from "react-router-dom";
 
 const TravelPlan = ({ plan }) => {
+  // const TravelPlan = () => {
+  const location = useLocation();
+  const data = location.state?.data;
+  console.log('data in travel day by day plan : ',data);
+  
   return (
     <div className="container">
       {plan.map((activities, index) => (

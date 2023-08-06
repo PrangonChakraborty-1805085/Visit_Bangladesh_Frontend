@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .date {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+  
+  .activity {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .activity:not(:last-child) {
+    margin-right: 20px;
+  }
+  
+  .activity__name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 20px;
+  }
+  
+  .activity__description {
+    font-size: 16px;
+    margin-right: 20px;
+  }
+  
+  .activity__rating {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 20px;
+    color: green;
+  }
+  
+  .activity__date {
+    font-size: 16px;
+    color: gray;
+  }
+  

@@ -36,17 +36,28 @@ const HeroForm = () => {
     setGuests(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Do something with the form data
-    // route to day_by_day using react-router-dom
+    const formData = {
+      destinations: destinations.map((dest) => dest),
+      startDate,
+      endDate,
+      guests,
+    };
+    console.log("Form Data:", formData);
+    try {
+      // Replace 'YOUR_BACKEND_API_URL' with the actual endpoint where you want to send the data
+      const response = await axios.post(
+        "http://localhost:8080/api/planner/initialPlan",
+        formData
+      );
+      console.log("Response from backend:", response.data);
 
-    console.log("destinations:", destinations);
-    console.log("Start Date:", startDate);
-    console.log("End Date:", endDate);
-    console.log("Guests:", guests);
-    // Redirect to the day_by_day page after form submission
-    navigateTo("/day_by_day");
+      // Redirect to the day_by_day page after successful form submission
+      navigateTo("/day_by_day", { state: { data: response.data } });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (

@@ -1,0 +1,16 @@
+.rating-stars {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  font-size: inherit;
+  cursor: pointer;
+  /* color: #d3d3d3; Default star color (gray) */
+}
+
+.filled {
+  color: yellow; /* Filled star color (yellow) */
+}
+  
