@@ -1,12 +1,7 @@
 import React from "react";
-import "./travelplanupdated.css";
-import RatingStars from "../../Rating/RatingStars";
-import { useLocation } from "react-router-dom";
+import RatingStars from "../Rating/RatingStars";
 
-const TravelPlanUpdated = () => {
-  const location = useLocation();
-  const plan = location.state?.data;
-  console.log("data in travel day by day plan : ", plan);
+const DayByDayPlan = ({ plan }) => {
   return (
     <div className="container">
       {plan.map((item, index) => (
@@ -40,4 +35,4 @@ const TravelPlanUpdated = () => {
   );
 };
 
-export default TravelPlanUpdated;
+export default DayByDayPlan;

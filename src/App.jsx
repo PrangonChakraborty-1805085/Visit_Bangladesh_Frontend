@@ -1,7 +1,7 @@
 // import React from 'react';
 import HeroForm from "./components/Home/HeroForm";
 // import TravelPlan from "./components/TravelPlan/TravelPlan";
-import TravelPlanUpdated from "./components/Home/TravelPlanUpdated/TravelPlanUpdated";
+import TravelPlanUpdated from "./components/TravelPlanUpdated/DayByDayPlan";
 import React from "react";
 import {
   Route,
@@ -154,7 +154,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
       <Route index element={<HeroForm />} />
-      <Route path="day_by_day" element={<TravelPlanUpdated  />} />
+      <Route path="day_by_day" element={<TravelPlanUpdated />} />
     </Route>
   )
 );

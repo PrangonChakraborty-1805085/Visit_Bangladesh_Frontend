@@ -3,7 +3,7 @@ import { useState, Suspense, lazy } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
-import "./HeroForm.css";
+import "./heroform.css";
 import Loading from "../Loading/Loading";
 
 const HeroForm = () => {
@@ -45,19 +45,7 @@ const HeroForm = () => {
       guests,
     };
     console.log("Form Data:", formData);
-    try {
-      // Replace 'YOUR_BACKEND_API_URL' with the actual endpoint where you want to send the data
-      const response = await axios.post(
-        "http://localhost:8080/api/planner/initialPlan",
-        formData
-      );
-      console.log("Response from backend:", response.data);
-
-      // Redirect to the day_by_day page after successful form submission
-      navigateTo("/day_by_day", { state: { data: response.data } });
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
+    navigateTo("/day_by_day", { state: { data: formData } });
   };
 
   return (
