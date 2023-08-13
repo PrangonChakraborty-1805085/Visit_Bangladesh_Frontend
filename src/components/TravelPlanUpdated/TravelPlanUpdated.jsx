@@ -1,46 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./travelplanupdated.css";
-import { useLocation } from "react-router-dom";
-import { Suspense, lazy } from "react";
-import Loading from "../Loading/Loading"; // Import the Loading component
-import axios from "axios";
+import DayByDayPlan from "./DayByDayPlan";
+import Loading from "./Loading";
 
-const TravelPlanUpdated = () => {
-  const location = useLocation();
-  const formData = location.state?.data;
-  console.log("data in travel day by day plan : ", formData);
+import { useSelector } from "react-redux"; // this selector is used to grab the data from store
+
+export default function TravelPlanUpdated() {
+  // const planData = useSelector((state) => state.planReducer.value.plan);
   //create data useState
   const [plan, setPlan] = useState(null);
-  const fetchData = async () => {
-    try {
-      // Replace 'YOUR_BACKEND_API_URL' with the actual endpoint where you want to send the data
-      const response = await axios.post(
-        "http://localhost:8080/api/planner/initialPlan",
-        formData
-      );
-      console.log("Response from backend:", response.data);
-      setPlan(response.data);
-
-      // Redirect to the day_by_day page after successful form submission
-    } catch (error) {
-      console.error("Error getting data from database:", error);
+  const [loading, setLoading] = useState(true);
+  const planData = useSelector((state) => {
+    // console.log("Current State:", state); // Print the entire state object
+    // console.log("planReducer:", state.persistedPlanReducer); // Print the planReducer
+    // console.log("value:", state.persistedPlanReducer.value); // Print the value property of planReducer
+    return state.persistedPlanReducer.value.plan; // Return the specific data you need
+  });
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        console.log("sending request ...........");
+        const response = await fetch(
+          "https://vb-backend-cbzw.onrender.com/api/planner/initialPlan",
+          {
+            method: "POST",
+            body: JSON.stringify(planData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const jsonData = await response.json();
+        setPlan(jsonData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
     }
-  };
-  fetchData();
-  // console.log("data in travel day by day plan : ", data);
 
-  // Create a wrapper component that takes props and renders DayByDay component
-  const DayByDayWrapper = (props) => {
-    const DayByDayComponent = lazy(() => import("./DayByDayPlan"));
-    return <DayByDayComponent {...props} />;
-  };
+    fetchData();
+  }, [planData]);
+  // console.log("data in travel day by day plan : ", planData);
+  // const fetchData = async (formData) => {
+  //   try {
+  //     if (response.ok) {
+  //       const result = await response.json();
+  //       return result;
+  //     } else return null;
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     return null;
+  //   }
+  // };
+  // const initialPlan = fetchData(planData);
+  // setPlan(initialPlan);
+  // setLoading(false);
 
-  console.log("data in travel day by day plan : ", plan);
-  return (
-    <Suspense fallback={<Loading />}>
-      {plan && <DayByDayWrapper plan={plan} />}
-    </Suspense>
-  );
-};
-
-export default TravelPlanUpdated;
+  // console.log("data in travel day by day plan : ", plan);
+  if (loading) return <Loading />;
+  else return <DayByDayPlan plan={plan} />;
+}

@@ -1,16 +1,18 @@
 // src/components/HeroForm.js
-import { useState, Suspense, lazy } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { setPlan } from "../../redux/features/plan-slice"; // this is the plan slice where I will store the plan
+import { useDispatch } from "react-redux"; // dispatch is used to call the setPlan function, it can not be called automatically
 
-import axios from "axios";
 import "./heroform.css";
-import Loading from "../Loading/Loading";
+import { useNavigate } from "react-router-dom";
 
-const HeroForm = () => {
+function HeroForm() {
   const [destinations, setDestinations] = useState([""]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [guests, setGuests] = useState("");
+
+  const dispatch = useDispatch(); // declaring the dispatch hook
 
   const navigateTo = useNavigate();
 
@@ -36,7 +38,7 @@ const HeroForm = () => {
     setGuests(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
       destinations: destinations.map((dest) => dest),
@@ -44,8 +46,10 @@ const HeroForm = () => {
       endDate,
       guests,
     };
-    console.log("Form Data:", formData);
-    navigateTo("/day_by_day", { state: { data: formData } });
+    dispatch(setPlan(formData));
+    // print the form data
+    // console.log("data in hero form : ", formData);
+    navigateTo("/day_by_day");
   };
 
   return (
@@ -119,6 +123,6 @@ const HeroForm = () => {
       </div>
     </div>
   );
-};
+}
 
 export default HeroForm;
