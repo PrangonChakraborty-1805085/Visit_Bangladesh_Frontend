@@ -11,7 +11,7 @@ export default function Header() {
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeidth="2"
+            strokeWidth="2"
             className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
             viewBox="0 0 24 24"
           >
@@ -20,7 +20,7 @@ export default function Header() {
           <span className="ml-3 text-xl text-white">Visit Bangladesh</span>
         </a>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"></nav>
-        <button className="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none hover:text-gray-200   rounded text-base mt-4 md:mt-0">
+        <button className="inline-flex text-gray-200 items-center bg-transparent border-0 py-1 px-3 focus:outline-none hover:text-white   rounded text-base mt-4 md:mt-0">
           Login
         </button>
       </div>

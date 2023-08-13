@@ -1,7 +1,8 @@
 // import React from 'react';
 import HeroForm from "./components/Home/HeroForm";
 // import TravelPlan from "./components/TravelPlan/TravelPlan";
-import TravelPlanUpdated from "./components/TravelPlanUpdated/DayByDayPlan";
+import { PersistGate } from "redux-persist/integration/react"; // Import PersistGate
+import { persistor, store } from "./redux/store"; // Importing  Redux store
 import React from "react";
 import {
   Route,
@@ -9,6 +10,9 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
+import { Provider } from "react-redux";
+import Header from "./components/Header";
+import TravelPlanUpdated from "./components/TravelPlanUpdated/TravelPlanUpdated";
 
 // const plan = [
 //   {
@@ -153,7 +157,15 @@ import {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
-      <Route index element={<HeroForm />} />
+      <Route
+        index
+        element={
+          <>
+            <Header />
+            <HeroForm />
+          </>
+        }
+      />
       <Route path="day_by_day" element={<TravelPlanUpdated />} />
     </Route>
   )
@@ -161,9 +173,11 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
+    </Provider>
   );
 }
 
