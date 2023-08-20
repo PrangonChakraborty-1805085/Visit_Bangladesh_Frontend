@@ -1,5 +1,5 @@
 // import React from 'react';
-import HeroForm from "./components/Home/HeroForm";
+// import HeroForm from "./components/Home/HeroForm";
 // import TravelPlan from "./components/TravelPlan/TravelPlan";
 import { PersistGate } from "redux-persist/integration/react"; // Import PersistGate
 import { persistor, store } from "./redux/store"; // Importing  Redux store
@@ -11,162 +11,46 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { Provider } from "react-redux";
-import Header from "./components/Header";
-import TravelPlanUpdated from "./components/TravelPlanUpdated/TravelPlanUpdated";
+// import TravelPlanUpdated from "./components/TravelPlanUpdated/TravelPlanUpdated";
+import Home from "./pages/Home/Home";
+import CreatePlan from "./pages/CreatePlan/CreatePlan";
+// import LocationInfo from "./components/GeoLocationInfo/LocationInfo";
+// import WrappedFoodPlacesMap from "./components/Google/RestuarantMap";
+import MapContainer from "./components/Google/deprecated_MapContainer";
+import WrappedFoodPlacesMap from "./components/Google/Restuarants";
+import Trip from "./pages/Trip/Trip";
+import Day_by_Day from "./pages/Day_by_Day/Day_by_Day";
 
-// const plan = [
-//   {
-//     type: "cluster",
-//     value: [
-//       {
-//         name: "Hatirjheel Lake",
-//         time: 2,
-//         rating: 2,
-//       },
-//       {
-//         name: "Shangsad Bhaban",
-//         time: 2,
-//         rating: 2,
-//       },
-//       {
-//         name: "Siddheshwari Kali Mandir",
-//         time: 3,
-//         rating: 3,
-//       },
-//       {
-//         name: "Ahsan Manzil",
-//         time: 4,
-//         rating: 4,
-//       },
-//       {
-//         name: "Lalbag Fort",
-//         time: 3,
-//         rating: 4,
-//       },
-//       {
-//         name: "Bangladesh Liberation War Museum",
-//         time: 3,
-//         rating: 4,
-//       },
-//       {
-//         name: "Bangladesh National Museum",
-//         time: 3,
-//         rating: 3,
-//       },
-//       {
-//         name: "Dhaka Zoo",
-//         time: 4,
-//         rating: 2,
-//       },
-//     ],
-//   },
-//   {
-//     type: "depart",
-//     start: "Dhaka",
-//     end: "Chittagong",
-//     time: 241.52,
-//   },
-//   {
-//     type: "cluster",
-//     value: [
-//       {
-//         name: "Patenga Beach",
-//         time: 3,
-//         rating: 2,
-//       },
-//       {
-//         name: "Chittagong Ethnological Museum",
-//         time: 3,
-//         rating: 3,
-//       },
-//       {
-//         name: "Batali Hill",
-//         time: 4,
-//         rating: 4,
-//       },
-//       {
-//         name: "Chittagong Commonwealth War Cemetery",
-//         time: 3,
-//         rating: 3,
-//       },
-//       {
-//         name: "Chittagong War Cemetery",
-//         time: 2,
-//         rating: 3,
-//       },
-//       {
-//         name: "Foy's Lake",
-//         time: 2,
-//         rating: 4,
-//       },
-//       {
-//         name: "Chittagong Zoo",
-//         time: 4,
-//         rating: 3,
-//       },
-//     ],
-//   },
-//   {
-//     type: "depart",
-//     start: "Chittagong",
-//     end: "Sylhet",
-//     time: 366.494,
-//   },
-//   {
-//     type: "cluster",
-//     value: [
-//       {
-//         name: "Lalakhal",
-//         time: 3,
-//         rating: 4,
-//       },
-//       {
-//         name: "Jaflong",
-//         time: 4,
-//         rating: 2,
-//       },
-//       {
-//         name: "Ratargul Swamp Forest",
-//         time: 6,
-//         rating: 2,
-//       },
-//       {
-//         name: "Bisnakandi",
-//         time: 5,
-//         rating: 4,
-//       },
-//       {
-//         name: "Bholaganj Sada Pathor",
-//         time: 2,
-//         rating: 3,
-//       },
-//       {
-//         name: "Madhabkunda Waterfall",
-//         time: 2,
-//         rating: 3,
-//       },
-//     ],
-//   },
-//   {
-//     type: "depart",
-//     start: "Sylhet",
-//     end: "Dhaka",
-//     time: 248.922,
-//   },
-// ];
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
+      <Route index element={<Home />} />
       <Route
-        index
+        path="create/plan"
         element={
           <>
-            <Header />
-            <HeroForm />
+            <CreatePlan />
           </>
         }
       />
-      <Route path="day_by_day" element={<TravelPlanUpdated />} />
+      <Route
+        path=":username/trip"
+        element={
+          <>
+            {/* <MapContainer /> */}
+            <Trip />
+          </>
+        }
+      />
+      <Route
+        path=":username/trip/day_by_day"
+        element={
+          <>
+            <Day_by_Day />
+          </>
+        }
+      />
     </Route>
   )
 );
