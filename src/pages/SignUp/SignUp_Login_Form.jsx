@@ -2,18 +2,21 @@ import React, { useState } from "react";
 import GoogleIcon from "@mui/icons-material/Google";
 import { NavLink } from "react-router-dom";
 import { Store } from "react-notifications-component";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/features/user-slice";
 
 import {
-  auth,
+  // auth,
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
   signInWithGoogle,
 } from "../../firebase/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
+// import { useAuthState } from "react-firebase-hooks/auth";
+// import { useNavigate } from "react-router-dom";
 
 export default function SignUp_Login_Form({ login }) {
-  // console.log("login value is : ",login);
+  // dispatch creation
+  const dispatch = useDispatch();
   const notification = {
     title: "Welcome to Visit Bangladesh!",
     message: "You have logged in successfully",
@@ -34,37 +37,158 @@ export default function SignUp_Login_Form({ login }) {
   const [isLogin, setIsLogin] = useState(login);
   const handleGoogleSignUpOrLogin = (event) => {
     event.preventDefault();
-    signInWithGoogle().then(() => {
-      //show a notification on the top left corner of the screen
-      Store.addNotification({
-        ...notification,
-        dismiss: {
-          duration: 2000,
-          pauseOnHover: true,
-        },
-        touchSlidingExit: {
-          swipe: {
-            duration: 1000,
-            timingFunction: "ease-out",
-            delay: 0,
+    signInWithGoogle().then((result) => {
+      if (result.user === null) {
+        Store.addNotification({
+          ...notification,
+          type: "danger",
+          title: result.status,
+          message: "Try again",
+          dismiss: {
+            duration: 2000,
+            pauseOnHover: true,
           },
-          fade: {
-            duration: 1000,
-            timingFunction: "ease-out",
-            delay: 0,
+          touchSlidingExit: {
+            swipe: {
+              duration: 1000,
+              timingFunction: "ease-out",
+              delay: 0,
+            },
+            fade: {
+              duration: 1000,
+              timingFunction: "ease-out",
+              delay: 0,
+            },
           },
-        },
-      });
+        });
+      } else {
+        Store.addNotification({
+          ...notification,
+          dismiss: {
+            duration: 2000,
+            pauseOnHover: true,
+          },
+          touchSlidingExit: {
+            swipe: {
+              duration: 1000,
+              timingFunction: "ease-out",
+              delay: 0,
+            },
+            fade: {
+              duration: 1000,
+              timingFunction: "ease-out",
+              delay: 0,
+            },
+          },
+        });
+        //dispatch the user
+        dispatch(setUser(result.user));
+      }
     });
   };
   const handleSignUpOrLogin = (event) => {
     event.preventDefault();
     if (isLogin) {
       // handle login with email and password by google
-      logInWithEmailAndPassword(email, password);
+      logInWithEmailAndPassword(email, password).then((result) => {
+        if (result.user === null) {
+          Store.addNotification({
+            ...notification,
+            type: "danger",
+            title: result.status,
+            message: "Try again",
+            dismiss: {
+              duration: 2000,
+              pauseOnHover: true,
+            },
+            touchSlidingExit: {
+              swipe: {
+                duration: 1000,
+                timingFunction: "ease-out",
+                delay: 0,
+              },
+              fade: {
+                duration: 1000,
+                timingFunction: "ease-out",
+                delay: 0,
+              },
+            },
+          });
+        } else {
+          Store.addNotification({
+            ...notification,
+            dismiss: {
+              duration: 2000,
+              pauseOnHover: true,
+            },
+            touchSlidingExit: {
+              swipe: {
+                duration: 1000,
+                timingFunction: "ease-out",
+                delay: 0,
+              },
+              fade: {
+                duration: 1000,
+                timingFunction: "ease-out",
+                delay: 0,
+              },
+            },
+          });
+          //dispatch the user
+          dispatch(setUser(result.user));
+        }
+      });
     } else {
       // handle sign up with email and password by google
-      registerWithEmailAndPassword(username, email, password);
+      registerWithEmailAndPassword(username, email, password).then((result) => {
+        if (result.user === null) {
+          Store.addNotification({
+            ...notification,
+            type: "danger",
+            title: result.status,
+            message: "Try again",
+            dismiss: {
+              duration: 2000,
+              pauseOnHover: true,
+            },
+            touchSlidingExit: {
+              swipe: {
+                duration: 1000,
+                timingFunction: "ease-out",
+                delay: 0,
+              },
+              fade: {
+                duration: 1000,
+                timingFunction: "ease-out",
+                delay: 0,
+              },
+            },
+          });
+        } else {
+          Store.addNotification({
+            ...notification,
+            message: "You have signed up successfully",
+            dismiss: {
+              duration: 2000,
+              pauseOnHover: true,
+            },
+            touchSlidingExit: {
+              swipe: {
+                duration: 1000,
+                timingFunction: "ease-out",
+                delay: 0,
+              },
+              fade: {
+                duration: 1000,
+                timingFunction: "ease-out",
+                delay: 0,
+              },
+            },
+          });
+          //dispatch the user
+          dispatch(setUser(result.user));
+        }
+      });
     }
   };
   const handleSwitchState = () => {

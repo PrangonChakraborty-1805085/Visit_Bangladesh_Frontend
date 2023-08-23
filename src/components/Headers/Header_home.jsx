@@ -5,6 +5,8 @@ import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
+import Avatar from "@mui/material/Avatar";
+import { deepPurple } from "@mui/material/colors";
 // import Button from "@mui/material/Button";
 import SignUp_Login_Form from "../../pages/SignUp/SignUp_Login_Form";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -127,6 +129,15 @@ export default function Header_home() {
               Log out
             </button>
           </NavLink>
+        )}
+        {user ? (
+          user.photoURL ? (
+            <Avatar alt="" src={user?.photoURL} />
+          ) : (
+            <Avatar sx={{ bgcolor: deepPurple[500] }}></Avatar>
+          )
+        ) : (
+          <></>
         )}
       </div>
     </header>
