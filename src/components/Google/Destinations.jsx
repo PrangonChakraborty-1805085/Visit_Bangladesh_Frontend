@@ -1,3 +1,5 @@
+//! here this component is not used because google-maps-react has no component or module named DirectionsRenderer
+
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import {

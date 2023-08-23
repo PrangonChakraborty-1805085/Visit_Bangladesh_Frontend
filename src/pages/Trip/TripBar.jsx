@@ -52,7 +52,7 @@ export default function TripBar() {
           >
             Day By Day
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to={
               userIsLoggedIn
                 ? "/" + username + "/trip/checklist"
@@ -64,7 +64,7 @@ export default function TripBar() {
             activeClassName="border-b-2 border-black" // Apply border-black when active
           >
             Checklist
-          </NavLink>
+          </NavLink> */}
         </nav>
       </div>
     </header>

@@ -1,8 +1,8 @@
 import { Rating } from "@mui/material";
 import React from "react";
 
-export default function TouristSpotCard() {
-  const event = {
+export default function TouristSpotCard({event}) {
+  const eventt = {
     name: "Siddheshwari Kali Mandir",
     startTime: "9 am",
     endTime: "10.45am",

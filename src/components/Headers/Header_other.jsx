@@ -1,17 +1,84 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-// import { useLocation } from "react-router-dom";
-// import
-
+// import SignUp_Modal from "../../pages/SignUp/SignUp_Modal";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+// import Button from "@mui/material/Button";
+import SignUp_Login_Form from "../../pages/SignUp/SignUp_Login_Form";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, logout } from "../../firebase/firebase";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 500,
+  height: 600,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  borderRadius: 6,
+  p: 4,
+};
 export default function Header_other() {
-  //   const location = useLocation();
-  //   const isHomeRoute = location.pathname === "/";
-  // const isHomeRoute = true;
+  // for signup modal component
+  const [login, setLogin] = React.useState(false);
+
+  const [user, loading, error] = useAuthState(auth);
+
+  const [modalOpen, setModalOpen] = React.useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setModalOpen(false);
+    }
+  }, [user]);
+
+  const handleSignUpFormOpen = () => {
+    setModalOpen(true);
+    setLogin(false);
+  };
+  const handleLoginFormOpen = () => {
+    setModalOpen(true);
+    setLogin(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
+  const handleLogOut = () => {
+    logout();
+  };
 
   return (
     <header
       className={`text-gray-800 bg-white shadow-md fixed w-full top-0 z-10`}
     >
+      {!user && (
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={modalOpen}
+          onClose={handleModalClose}
+          closeAfterTransition
+          slots={{ backdrop: Backdrop }}
+          slotProps={{
+            backdrop: {
+              timeout: 500,
+            },
+          }}
+        >
+          <Fade in={modalOpen}>
+            <Box sx={style}>
+              {/* {loading && "loading"} */}
+              <SignUp_Login_Form login={login} />
+            </Box>
+          </Fade>
+        </Modal>
+      )}
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <NavLink
           to="/"
@@ -32,20 +99,36 @@ export default function Header_other() {
           <span className={`ml-3 text-xl text-black`}>Visit Bangladesh</span>
         </NavLink>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"></nav>
-        <NavLink to="/login">
-          <button
-            className={`inline-flex items-center bg-transparent border-2 pl-6 pr-6 py-2 px-4 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full text-base mt-4 mr-4 md:mt-0 border-black text-gray-950`}
-          >
-            Login
-          </button>
-        </NavLink>
-        <NavLink to="/signup">
-          <button
-            className={`inline-flex items-center border-2 pl-6 pr-6 py-2 px-4 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full text-base mt-4 md:mt-0 border-black bg-white text-gray-950`}
-          >
-            Sign Up
-          </button>
-        </NavLink>
+        {!user && (
+          <NavLink>
+            <button
+              onClick={handleLoginFormOpen}
+              className={`inline-flex items-center bg-transparent border-2 pl-6 pr-6 py-2 px-4 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full text-base mt-4 mr-4 md:mt-0 border-black text-gray-950`}
+            >
+              Login
+            </button>
+          </NavLink>
+        )}
+        {!user && (
+          <NavLink>
+            <button
+              onClick={handleSignUpFormOpen}
+              className={`inline-flex items-center border-2 pl-6 pr-6 py-2 px-4 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full text-base mt-4 md:mt-0 border-black bg-white text-gray-950`}
+            >
+              Sign Up
+            </button>
+          </NavLink>
+        )}
+        {user && (
+          <NavLink>
+            <button
+              onClick={handleLogOut}
+              className={`inline-flex items-center border-2 pl-6 pr-6 py-2 px-4 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full text-base mt-4 md:mt-0 border-black bg-white text-gray-950`}
+            >
+              Log out
+            </button>
+          </NavLink>
+        )}
       </div>
     </header>
   );

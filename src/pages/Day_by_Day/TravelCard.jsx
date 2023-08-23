@@ -1,46 +1,45 @@
 import { Rating } from "@mui/material";
 import React from "react";
 
-export default function TravelCard() {
-  const event = {
-    name: "Siddheshwari Kali Mandir",
-    startTime: "9 am",
-    endTime: "10.45am",
-    lat: "22.644520",
-    lng: "88.423480",
-    rating: 3.5,
-    description: "Hindu Temple",
-    imageURL:
-      "https://sritiochetona.org/wp-content/uploads/2020/06/FB_IMG_1592115991280.jpg",
+export default function TravelCard({ event }) {
+  const eventt = {
+    type: "depart",
+    start: "Sylhet",
+    end: "Dhaka",
+    startTime: "6 am",
+    endTime: "1 pm",
   };
   return (
-    <div className="py-8 flex flex-row items-center justify-center md:flex-nowrap rounded-lg shadow-lg mb-4 ">
-      <div className="flex flex-row items-center justify-evenly min-h-full  p-4">
-        <div className="md:w-64 md:mb-0 mb-6 flex flex-col">
-          <span className="mt-1 text-gray-500 text-sm">{event.startTime}</span>
-          <span className="mt-1 text-gray-500 text-sm">{event.endTime}</span>
-        </div>
-        <div className="md:flex-grow ">
-          <img
-            alt="content"
-            className="object-cover object-center  w-full"
-            src={event.imageURL}
-          />
-        </div>
-        <div className=" flex flex-col p-4 items-center justify-center m-2 ">
-          <h1 className="text-gray-950 text-base font-bold pb-1">
-            {event.name}
-          </h1>
-          <div className="flex flex-row items-center  pb-1">
-            <Rating
-              name="half-rating-read"
-              defaultValue={event.rating}
-              precision={0.5}
-              readOnly
-            />
-            <h1 className="">{event.rating}</h1>
+    <div className=" min-w-full py-8 flex flex-row items-center justify-center md:flex-nowrap rounded-lg shadow-lg mb-4 ">
+      <div className="flex items-center justify-center min-h-full min-w-full">
+        <div className=" md:w-1/3  min-w-full">
+          <div className="flex rounded-lg min-h-full  p-8 flex-col">
+            <div className="flex items-center mb-3">
+              <h2 className="text-gray-900 text-lg font-bold title-font">
+                {event.start} city to {event.end} city
+              </h2>
+            </div>
+            <div className="flex-grow">
+              <div className="flex flex-row items-center">
+                <div className="text-gray-600  w-1/3 flex flex-col items-start p-2">
+                  <h1>{event.startTime}</h1>
+                </div>
+                <div className="text-gray-700 w-2/3  p-2">
+                  <h1 className="font-bold">Depart from {event.start} city</h1>
+                </div>
+              </div>
+            </div>
+            <div className="flex-grow">
+              <div className="flex flex-row items-center ">
+                <div className="text-gray-600  w-1/3 flex flex-col items-start p-2">
+                  <h1>{event.endTime}</h1>
+                </div>
+                <div className="text-gray-700 w-2/3  p-2">
+                  <h1 className="font-bold">Arrive in {event.end} city</h1>
+                </div>
+              </div>
+            </div>
           </div>
-          <h1 className="text-gray-500  pb-1"> {event.description}</h1>
         </div>
       </div>
     </div>

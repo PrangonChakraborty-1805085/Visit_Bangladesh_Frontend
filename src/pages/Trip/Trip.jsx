@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import CityByCityRoute from "./CityByCityRoute";
 import WrappedMapWithRoutes from "../../components/Google/Destinations_new";
 import Header_other from "../../components/Headers/Header_other";
+import Header_home from "../../components/Headers/Header_home";
 
 export default function Trip() {
   const currentUserBrowsingCity = useSelector(
@@ -21,7 +22,7 @@ export default function Trip() {
   ];
   return (
     <section className="text-gray-600 min-w-full min-h-screen">
-      <Header_other />
+      <Header_home />
       <div className="container min-w-full flex flex-col">
         <div className="lg:w-full mx-auto max-h-screen relative">
           <div className="rounded-lg max-h-[500px] w-full overflow-hidden">
@@ -46,31 +47,6 @@ export default function Trip() {
             </div>
             <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-700 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
               <WrappedMapWithRoutes places={places} />
-              {/* <p className="leading-relaxed text-lg mb-4">
-                Meggings portland fingerstache lyft, post-ironic fixie man bun
-                banh mi umami everyday carry hexagon locavore direct trade art
-                party. Locavore small batch listicle gastropub farm-to-table
-                lumbersexual salvia messenger bag. Coloring book flannel
-                truffaut craft beer drinking vinegar sartorial, disrupt fashion
-                axe normcore meh butcher. Portland 90's scenester vexillologist
-                forage post-ironic asymmetrical, chartreuse disrupt butcher
-                paleo intelligentsia pabst before they sold out four loko. 3
-                wolf moon brooklyn.
-              </p> */}
-              {/* <a className="text-indigo-500 inline-flex items-center">
-                Learn More
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="w-4 h-4 ml-2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </a> */}
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-const plan = [
+export const plan = [
   {
     date: "August 23,2023",
     plan: [
@@ -115,4 +115,3 @@ const plan = [
     ],
   },
 ];
-export default plan;

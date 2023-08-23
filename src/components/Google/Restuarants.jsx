@@ -61,10 +61,12 @@ const FoodPlacesMap = (props) => {
   };
 
   return (
-    <div className="w-2/5">
-      <div className="p-4 border border-gray-300 rounded-lg shadow-md">
-        <h1 className="text-xl font-semibold mb-4">Food Places Map</h1>
-        <div className="w-full h-64 relative">
+    <div className="py-8 flex flex-col items-center justify-center md:flex-nowrap rounded-lg shadow-lg mb-4 w-96 ">
+      <div className="flex flex-col items-center justify-evenly min-h-full min-w-full  p-4">
+        <h1 className="text-xl font-semibold mb-4 min-w-full">
+          Food Places Near You
+        </h1>
+        <div className="min-w-full h-64 relative ">
           <Map
             google={props.google}
             zoom={14}
