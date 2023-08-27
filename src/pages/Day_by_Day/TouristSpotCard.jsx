@@ -1,18 +1,18 @@
 import { Rating } from "@mui/material";
 import React from "react";
 
-export default function TouristSpotCard({event}) {
-  const eventt = {
-    name: "Siddheshwari Kali Mandir",
-    startTime: "9 am",
-    endTime: "10.45am",
-    lat: "22.644520",
-    lng: "88.423480",
-    rating: 3.5,
-    description: "Hindu Temple",
-    imageURL:
-      "https://sritiochetona.org/wp-content/uploads/2020/06/FB_IMG_1592115991280.jpg",
-  };
+export default function TouristSpotCard({ event }) {
+  // const eventt = {
+  //   name: "Siddheshwari Kali Mandir",
+  //   startTime: "9 am",
+  //   endTime: "10.45am",
+  //   lat: "22.644520",
+  //   lng: "88.423480",
+  //   rating: 3.5,
+  //   description: "Hindu Temple",
+  //   imageURL:
+  //     "https://sritiochetona.org/wp-content/uploads/2020/06/FB_IMG_1592115991280.jpg",
+  // };
   return (
     <div className="py-8 flex flex-row items-center justify-center md:flex-nowrap rounded-lg shadow-lg mb-4 ">
       <div className="flex flex-row items-center justify-evenly min-h-full  p-4">

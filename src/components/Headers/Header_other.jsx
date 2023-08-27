@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 // import SignUp_Modal from "../../pages/SignUp/SignUp_Modal";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Avatar from "@mui/material/Avatar";
+import SearchIcon from "@mui/icons-material/Search";
+import SendIcon from "@mui/icons-material/Send";
+
 import { deepPurple } from "@mui/material/colors";
 // import Button from "@mui/material/Button";
 import SignUp_Login_Form from "../../pages/SignUp/SignUp_Login_Form";
@@ -32,6 +35,20 @@ export default function Header_other() {
 
   const [modalOpen, setModalOpen] = React.useState(false);
 
+  const [search, setSearch] = useState("");
+
+  const navigateTo = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    //check if search is empty
+    if (search === "") {
+      return;
+    }
+    // create a route containing the search as query=search and navigate to that
+    navigateTo("/search?query=" + search);
+  };
+
   useEffect(() => {
     if (user) {
       setModalOpen(false);
@@ -56,9 +73,7 @@ export default function Header_other() {
   };
 
   return (
-    <header
-      className={`text-gray-800 bg-white shadow-md fixed w-full top-0 z-10`}
-    >
+    <header className={`text-gray-800 bg-white shadow-md w-full`}>
       {!user && (
         <Modal
           aria-labelledby="transition-modal-title"
@@ -100,7 +115,42 @@ export default function Header_other() {
           </svg>
           <span className={`ml-3 text-xl text-black`}>Visit Bangladesh</span>
         </NavLink>
-        <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center"></nav>
+        <form className="flex flex-grow items-center justify-center">
+          <div className="relative w-3/5 flex flex-row items-center justify-center">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg
+                className="w-4 h-4 text-gray-800 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="default-search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="block w-full p-4 h-12 pl-10 text-sm text-gray-850 border border-gray-800 bg-transparent  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Search destinations"
+              required
+            />
+            <button
+              onClick={handleSearch}
+              className="text-gray-800 bg-gray-800 focus:ring-4 focus:outline-none  font-medium text-sm px-4 py-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              <SendIcon className="text-white" />
+            </button>
+          </div>
+        </form>
         {!user && (
           <NavLink>
             <button
@@ -125,7 +175,7 @@ export default function Header_other() {
           <NavLink>
             <button
               onClick={handleLogOut}
-              className={`inline-flex items-center border-2 pl-6 pr-6 py-2 px-4 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full text-base mt-4 md:mt-0 border-black bg-white text-gray-950`}
+              className={`inline-flex items-center border-2 pl-6 pr-6 mr-6 py-2 px-4 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full text-base mt-4 md:mt-0 border-black bg-white text-gray-950`}
             >
               Log out
             </button>

@@ -6,19 +6,19 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/features/user-slice";
 
 import {
-  // auth,
+  auth,
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
   signInWithGoogle,
 } from "../../firebase/firebase";
-// import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 // import { useNavigate } from "react-router-dom";
 
 export default function SignUp_Login_Form({ login }) {
   // dispatch creation
   const dispatch = useDispatch();
   const notification = {
-    title: "Welcome to Visit Bangladesh!",
+    title: "Welcome",
     message: "You have logged in successfully",
     type: "success",
     insert: "top",
@@ -32,7 +32,7 @@ export default function SignUp_Login_Form({ login }) {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
-  // const [user, loading, error] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
 
   const [isLogin, setIsLogin] = useState(login);
   const handleGoogleSignUpOrLogin = (event) => {
@@ -64,6 +64,7 @@ export default function SignUp_Login_Form({ login }) {
       } else {
         Store.addNotification({
           ...notification,
+          title: `Welcome ${user.displayName}`,
           dismiss: {
             duration: 2000,
             pauseOnHover: true,
@@ -117,6 +118,8 @@ export default function SignUp_Login_Form({ login }) {
         } else {
           Store.addNotification({
             ...notification,
+            title: `Welcome ${user.displayName}`,
+
             dismiss: {
               duration: 2000,
               pauseOnHover: true,
@@ -167,6 +170,8 @@ export default function SignUp_Login_Form({ login }) {
         } else {
           Store.addNotification({
             ...notification,
+            title: `Welcome ${user.displayName}`,
+
             message: "You have signed up successfully",
             dismiss: {
               duration: 2000,

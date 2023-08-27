@@ -1,20 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-const BookingWidget = ({
-  latitude,
-  longitude,
-  landmarkName,
-  address
-}) => {
+const BookingWidget = ({ latitude, longitude, landmarkName, address }) => {
   useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
+    const script = document.createElement("script");
+    script.type = "text/javascript";
     script.async = true;
-    script.src = '//cf.bstatic.com/static/affiliate_base/js/flexiproduct.js';
-    document.getElementsByTagName('head')[0].appendChild(script);
+    script.src = `//cf.bstatic.com/static/affiliate_base/js/flexiproduct.js?v=${+new Date()}`;
+    document.getElementsByTagName("head")[0].appendChild(script);
 
     return () => {
-      document.getElementsByTagName('head')[0].removeChild(script);
+      document.getElementsByTagName("head")[0].removeChild(script);
     };
   }, []);
 
@@ -24,15 +19,15 @@ const BookingWidget = ({
       data-aid="2385798"
       data-target_aid="2385798"
       data-prod="map"
-      data-width="400"
-      data-height="800"
+      data-width="800"
+      data-height="350"
       data-lang="ualng"
       data-dest_id="0"
       data-dest_type="landmark"
       data-latitude={latitude}
       data-longitude={longitude}
       data-landmark_name={landmarkName}
-      data-mwhsb="0"
+      data-mwhsb="1"
       data-address={address}
     >
       {/* Anything inside will go away once the widget is loaded. */}

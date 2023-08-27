@@ -61,7 +61,7 @@ const FoodPlacesMap = (props) => {
   };
 
   return (
-    <div className="py-8 flex flex-col items-center justify-center md:flex-nowrap rounded-lg shadow-lg mb-4 w-96 ">
+    <div className="py-8 pt-5 flex flex-col items-center justify-center md:flex-nowrap rounded-lg shadow-lg mb-4 w-[50rem]">
       <div className="flex flex-col items-center justify-evenly min-h-full min-w-full  p-4">
         <h1 className="text-xl font-semibold mb-4 min-w-full">
           Food Places Near You

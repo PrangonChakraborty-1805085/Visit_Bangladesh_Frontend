@@ -3,7 +3,7 @@ import StartEnd from "./StartEnd";
 import Transport from "./Transport";
 import Tour from "./Tour";
 
-export default function CityByCityRoute({ startCity, endCity }) {
+export default function CityByCityRoute({ startCity, endCity, destinations }) {
   const cities = ["Dhaka", "Sylhet", "Chattagram"];
   const travels = [
     {

@@ -13,6 +13,8 @@ import CreatePlan from "./pages/CreatePlan/CreatePlan";
 import Trip from "./pages/Trip/Trip";
 import Day_by_Day from "./pages/Day_by_Day/Day_by_Day";
 import { plan } from "./Data";
+import Search from "./pages/Search/Search";
+import DestinationDescription from "./pages/DestinationDescription/DestinationDescription";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,7 +41,23 @@ const router = createBrowserRouter(
         path=":username/trip/day_by_day"
         element={
           <>
-            <Day_by_Day plan={plan} />
+            <Day_by_Day />
+          </>
+        }
+      />
+      <Route
+        path="search"
+        element={
+          <>
+            <Search />
+          </>
+        }
+      />
+      <Route
+        path="destination/"
+        element={
+          <>
+            <DestinationDescription />
           </>
         }
       />

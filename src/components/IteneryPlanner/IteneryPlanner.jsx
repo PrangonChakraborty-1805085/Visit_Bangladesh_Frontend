@@ -12,8 +12,14 @@ import {
 import { useDispatch } from "react-redux"; // dispatch is used to call the setPlan function, it can not be called automatically
 
 import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function IteneryPlanner() {
+  const [user, loading, error] = useAuthState(auth);
+  const dispatch = useDispatch(); // declaring the dispatch hook
+  const navigateTo = useNavigate();
+
   const [dests, setDests] = useState([""]);
   const [starttDate, setStarttDate] = useState("");
   const [enddDate, setEnddDate] = useState("");
@@ -21,14 +27,6 @@ export default function IteneryPlanner() {
 
   //create a state to handle selected destinations
   const [selectedDestinations, setSelectedDestinations] = useState([]);
-
-  const username = useSelector((state) => {
-    return state.persistedUserReducer.username;
-  });
-
-  const dispatch = useDispatch(); // declaring the dispatch hook
-
-  const navigateTo = useNavigate();
 
   const handleAddDestination = () => {
     setDests([...dests, ""]);
@@ -74,6 +72,28 @@ export default function IteneryPlanner() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    //first validate the start and end dates. Check if the start date or end date is before today
+    const today = new Date();
+    const todayDate = today.getDate();
+    const todayMonth = today.getMonth() + 1;
+    const todayYear = today.getFullYear();
+    const todayDateString = `${todayYear}-${todayMonth}-${todayDate}`;
+    const todayDateObject = new Date(todayDateString);
+    const startDateObject = new Date(starttDate);
+    const endDateObject = new Date(enddDate);
+    if (startDateObject < todayDateObject) {
+      alert("Start date can not be before today");
+      return;
+    }
+    if (endDateObject < todayDateObject) {
+      alert("End date can not be before today");
+      return;
+    }
+    if (endDateObject < startDateObject) {
+      alert("End date can not be before start date");
+      return;
+    }
+
     const formData = {
       destinations: selectedDestinations.map((dest) => dest),
       starttDate,
@@ -88,13 +108,14 @@ export default function IteneryPlanner() {
     // print the form data
     // console.log("data in hero form : ", formData);
     // console.log("current user : ", username);
-    const userIsLoggedIn = username !== "";
-    if (userIsLoggedIn) {
+    if (!user) {
       // If user is logged in, navigate to username/day_by_day
-      navigateTo(`/${username}/trip`);
-    } else {
-      // If user is not logged in, navigate to random/day_by_day
       navigateTo("/random/trip");
+    } else {
+      // get the letters before '@' from the email
+      const username = user.email.split("@")[0];
+      navigateTo(`/${username}/trip`);
+      // If user is not logged in, navigate to random/day_by_day
     }
   };
   return (

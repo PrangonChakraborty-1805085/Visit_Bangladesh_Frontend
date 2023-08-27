@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   value: {
-    plan: {},
+    plan: null,
     userLocation: "",
     destinations: [],
     start_date: "",
     end_date: "",
-    noOfGuests: 0,
+    noOfGuests: 1,
   },
 };
 
