@@ -72,12 +72,14 @@ export default function Trip() {
     { lat: 22.3419, lng: 91.815536 }, // Chittagong, BD
     // Add more places as needed
   ];
-  if (planLoading)
+  if (planLoading) {
     return (
-      <div>
-        <Loading />;
-      </div>
+      <section className="text-gray-600 body-font">
+        <Header_other />
+        <Loading />
+      </section>
     );
+  }
   else {
     return (
       <section className="text-gray-600 min-w-full min-h-screen">
