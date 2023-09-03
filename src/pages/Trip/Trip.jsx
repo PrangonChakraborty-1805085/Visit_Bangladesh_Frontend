@@ -53,25 +53,26 @@ export default function Trip() {
       }
     }
     // check if already plan exists
-    // if (planData != null) {
-    //   setPlann(planData);
-    //   setPlanLoading(false);
-    // } else {
+    if (planData) {
+      setPlann(planData);
+      setPlanLoading(false);
+    } else {
     // plan is not ready, fetch it first
+    setPlanLoading(true);
     fetchData();
-    // }
+    }
   }, [planData, userInput, dispatch]);
   // const finalPlan = useSelector(
   //   (state) => state.persistedPlanReducer.value.plan
   // );
 
   //! for showing destinations in google map
-  const places = [
-    { lat: 24.886436, lng: 91.880722 }, // Sylhet, BD
-    { lat: 23.811056, lng: 90.407608 }, // Dhaka , BD
-    { lat: 22.3419, lng: 91.815536 }, // Chittagong, BD
-    // Add more places as needed
-  ];
+  // const places = [
+  //   { lat: 24.886436, lng: 91.880722 }, // Sylhet, BD
+  //   { lat: 23.811056, lng: 90.407608 }, // Dhaka , BD
+  //   { lat: 22.3419, lng: 91.815536 }, // Chittagong, BD
+  //   // Add more places as needed
+  // ];
   if (planLoading) {
     return (
       <section className="text-gray-600 body-font">
@@ -108,7 +109,7 @@ export default function Trip() {
                 />
               </div>
               <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-700 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
-                <WrappedMapWithRoutes places={places} />
+                <WrappedMapWithRoutes places={plann.destinations} />
               </div>
             </div>
           </div>

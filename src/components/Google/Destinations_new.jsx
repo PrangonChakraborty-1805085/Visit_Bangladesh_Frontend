@@ -3,16 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import axios from "axios";
 
-const MapWithRoutes = ({ google, apiKey }) => {
+const MapWithRoutes = ({ google, apiKey, places }) => {
   //   const [directionsRenderer, setDirectionsRenderer] = useState(null);
   //   const [loading, setLoading] = useState(true);
-
-  const places = [
-    { lat: 24.886436, lng: 91.880722 }, // Sylhet, BD
-    { lat: 23.811056, lng: 90.407608 }, // Dhaka, BD
-    { lat: 22.3419, lng: 91.815536 }, // Chittagong, BD
-    // Add more places as needed
-  ];
 
   //   useEffect(() => {
   //     async function fetchData() {
@@ -36,8 +29,11 @@ const MapWithRoutes = ({ google, apiKey }) => {
     if (!google) return;
 
     const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 5,
-      center: places.length > 0 ? places[0] : { lat: 91.815536, lng: 22.3419 },
+      zoom: places.length > 1 ? 5 : 1, // Set a lower zoom level when there's only one place,
+      center:
+        places.length > 0
+          ? { lat: places[0].lat, lng: places[0].lng }
+          : { lat: 91.815536, lng: 22.3419 },
     });
 
     const renderer = new google.maps.DirectionsRenderer({
@@ -47,7 +43,7 @@ const MapWithRoutes = ({ google, apiKey }) => {
     const directionsService = new google.maps.DirectionsService();
 
     const waypoints = places.map((place) => ({
-      location: place,
+      location: { lat: place.lat, lng: place.lng },
       stopover: true,
     }));
 

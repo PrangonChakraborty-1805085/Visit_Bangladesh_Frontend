@@ -46,6 +46,14 @@ const router = createBrowserRouter(
         }
       />
       <Route
+        path=":username/trip/day_by_day/edit"
+        element={
+          <>
+            <Day_by_Day />
+          </>
+        }
+      />
+      <Route
         path="search"
         element={
           <>

@@ -17,8 +17,11 @@ const FoodPlacesMap = (props) => {
         const response = await fetch(
           "https://vb-backend-cbzw.onrender.com/api/foodPlace/home",
           {
-            method: "GET",
-            //   body: JSON.stringify(userInput),
+            method: "POST",
+            body: JSON.stringify({
+              lat: props.event.lat,
+              lng: props.event.lng,
+            }),
             headers: {
               "Content-Type": "application/json",
             },
@@ -72,15 +75,19 @@ const FoodPlacesMap = (props) => {
             zoom={14}
             style={{ width: "100%", height: "100%" }}
             initialCenter={{
-              lat: 23.746466,
-              lng: 90.376015,
+              // lat: 23.746466,
+              // lng: 90.376015,
+              lat: props.event.lat,
+              lng: props.event.lng,
             }}
           >
             <Marker
               key={2}
               position={{
-                lat: 23.746466,
-                lng: 90.376015,
+                // lat: 23.746466,
+                // lng: 90.376015,
+                lat: props.event.lat,
+                lng: props.event.lng,
               }}
               icon={customBlueMarkerIcon} // Use the custom marker icon
               //   onMouseover={() => handleMarkerMouseover(place)}

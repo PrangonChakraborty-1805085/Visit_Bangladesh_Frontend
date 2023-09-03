@@ -12,6 +12,7 @@ export default function DestinationDescription() {
 
   const [moreInfo, setMoreInfo] = useState();
   useEffect(() => {
+    setLoading(true); // here whenever this component mounts, the loading will be on
     async function fetchData() {
       try {
         console.log("sending request from search ...........");
@@ -38,6 +39,7 @@ export default function DestinationDescription() {
   }, [id]);
 
   if (loading) {
+    console.log("loading started.............");
     return (
       <section className="text-gray-600 body-font">
         <Header_other />

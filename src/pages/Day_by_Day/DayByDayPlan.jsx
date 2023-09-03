@@ -35,28 +35,18 @@ export default function DayByDayPlan({ plann }) {
           <div className="w-1/6 p-2 m-2 text-lg text-gray-600 fixed top-30 left-20">
             <div className=" flex flex-col  ">
               {plann.daybyday.map((daybydayplan, index) => {
-                {
-                  /* const date = new Date(daybydayplan.date); */
-                }
-                {
-                  /* const month = monthNames[date.getMonth()]; */
-                }
-                {
-                  /* const presentDay = date.getDate(); */
-                }
+                {/* const date = new Date(daybydayplan.date); */}
+                {/* const month = monthNames[date.getMonth()]; */}
+                {/* const presentDay = date.getDate(); */}
                 // get the month 1st 3 digit
-                {
-                  /* const presentDayMonth = presentDay.split(" ")[0].slice(0, 3); */
-                }
+                {/* const presentDayMonth = presentDay.split(" ")[0].slice(0, 3); */}
                 // make it so that 1st letter capital and all other small
                 {
                   /* const presentDayMonthCapitalized =
                   presentDayMonth.charAt(0).toUpperCase() +
                   presentDayMonth.slice(1).toLowerCase(); */
                 }
-                {
-                  /* const displayString = presentDayMonth + " " + presentDay; */
-                }
+                {/* const displayString = presentDayMonth + " " + presentDay; */}
                 const clickedID = "clicked-element " + index;
                 return (
                   <div
@@ -88,15 +78,6 @@ export default function DayByDayPlan({ plann }) {
                     {month + " " + presentDay}
                   </h1>
                   {daybydayplan.cluster.map((event, index) => {
-                    {
-                      /* if (event.type === "depart")
-                      return <TravelCard key={index} event={event} />; */
-                    }
-                    {
-                      /* else if (event.type === "restuarant")
-                    else if (event.type === "hotel")
-                    {/* else if (event.type === "cluster") { */
-                    }
                     if (event.id >= 0)
                       return <TouristSpotCard key={index} event={event} />;
                     else return <RestuarantCard key={index} event={event} />;
@@ -105,6 +86,10 @@ export default function DayByDayPlan({ plann }) {
                 </div>
               );
             })}
+            {/* <TravelCard />
+            <TouristSpotCard />
+            <RestuarantCard />
+            <HotelCard /> */}
           </div>
           {/* <div className="w-1/3">
             <div className="bg-yellow-950 flex justify-center h-full">

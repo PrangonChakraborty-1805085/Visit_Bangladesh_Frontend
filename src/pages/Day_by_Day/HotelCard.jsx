@@ -5,6 +5,9 @@ export default function HotelCard({ event }) {
   return (
     <div className="bg-white py-8 flex flex-col items-center justify-center md:flex-nowrap rounded-lg shadow-lg mb-4 ">
       <div className="flex flex-col items-center justify-evenly min-h-full  p-4">
+        <h1 className="text-xl font-semibold mb-4 min-w-full">
+          Hotels Nearby
+        </h1>
         <BookingWidget
           latitude={event.lat}
           longitude={event.lng}
