@@ -29,6 +29,7 @@ export default function Trip() {
       startDate: state.persistedPlanReducer.value.start_date,
       endDate: state.persistedPlanReducer.value.end_date,
       guest: state.persistedPlanReducer.value.noOfGuests,
+      currentCity: currentUserBrowsingCity,
     };
   });
   useEffect(() => {
