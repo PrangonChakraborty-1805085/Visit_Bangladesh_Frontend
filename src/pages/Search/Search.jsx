@@ -17,7 +17,7 @@ export default function Search() {
       try {
         console.log("sending request from search ...........");
         const response = await fetch(
-          `https://vb-backend-cbzw.onrender.com/api/search?query=${queryString}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/search?query=${queryString}`,
           {
             method: "GET",
             headers: {

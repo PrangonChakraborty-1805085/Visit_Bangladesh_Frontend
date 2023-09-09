@@ -12,7 +12,7 @@ const MapWithRoutes = ({ google, apiKey, places }) => {
   //       try {
   //         console.log("sending request ...........");
   //         const response = await axios.get(
-  //           "https://vb-backend-cbzw.onrender.com/api/direction/home"
+  //           `${import.meta.env.VITE_BACKEND_URL}/api/direction/home`
   //         );
   //         const jsonData = response.data;
   //         setDirectionsRenderer(jsonData);

@@ -3,11 +3,9 @@ import TripBar from "../Trip/TripBar";
 import DayByDayPlan from "./DayByDayPlan";
 import Header_other from "../../components/Headers/Header_other";
 import { useSelector } from "react-redux";
-// import Header_home from "../../components/Headers/Header_home";
 
 export default function Day_by_Day() {
   const [isTripBarFixed, setIsTripBarFixed] = useState(false);
-
   const currentPlan = useSelector(
     (state) => state.persistedPlanReducer.value.plan
   );

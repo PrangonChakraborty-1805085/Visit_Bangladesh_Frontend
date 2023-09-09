@@ -1,3 +1,5 @@
+import editPlanReducer from "./features/edit-plan-slice";
+
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 // import storage from "redux-persist/lib/storage"; // Defaults to localStorage for web
@@ -13,10 +15,12 @@ const persistConfig = {
 };
 const persistedPlanReducer = persistReducer(persistConfig, planReducer);
 const persistedUserReducer = persistReducer(persistConfig, userReducer);
+const persistedEditPlanReducer = persistReducer(persistConfig, editPlanReducer);
 export const store = configureStore({
   reducer: {
     persistedPlanReducer,
     persistedUserReducer,
+    persistedEditPlanReducer,
   },
   middleware: [thunk],
 });

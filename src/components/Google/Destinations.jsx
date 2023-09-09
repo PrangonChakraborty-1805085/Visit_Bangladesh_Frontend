@@ -25,7 +25,7 @@ const MapWithRoutes = ({ google, placess, apiKey }) => {
       try {
         console.log("sending request ...........");
         const response = await fetch(
-          "https://vb-backend-cbzw.onrender.com/api/direction/home",
+          `${import.meta.env.VITE_BACKEND_URL}/api/direction/home`,
           {
             method: "GET",
             //   body: JSON.stringify(userInput),

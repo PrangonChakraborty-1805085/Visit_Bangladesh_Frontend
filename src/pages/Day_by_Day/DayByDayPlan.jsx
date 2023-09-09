@@ -3,14 +3,15 @@ import TouristSpotCard from "./TouristSpotCard";
 import TravelCard from "./TravelCard";
 import RestuarantCard from "./RestuarantCard";
 import HotelCard from "./HotelCard";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setEditPlan } from "../../redux/features/edit-plan-slice";
 
 export default function DayByDayPlan({ plann }) {
   const handleClick = (index) => {
     const targetElement = document.getElementById(`target-component ${index}`);
-    // const clickedElement = document.getElementById(`clicked-element ${index}`);
     if (targetElement) {
       targetElement.scrollIntoView({ behavior: "smooth" });
-      // clickedElement.style.color = "#000000";
     }
   };
   const monthNames = [
@@ -27,6 +28,10 @@ export default function DayByDayPlan({ plann }) {
     "November",
     "December",
   ];
+
+  const navigateTo = useNavigate();
+  const dispatch = useDispatch();
+
   return (
     <section className="text-gray-600 body-font overflow-hidden flex">
       <div className="px-5 py-10 mx-auto">
@@ -35,18 +40,28 @@ export default function DayByDayPlan({ plann }) {
           <div className="w-1/6 p-2 m-2 text-lg text-gray-600 fixed top-30 left-20">
             <div className=" flex flex-col  ">
               {plann.daybyday.map((daybydayplan, index) => {
-                {/* const date = new Date(daybydayplan.date); */}
-                {/* const month = monthNames[date.getMonth()]; */}
-                {/* const presentDay = date.getDate(); */}
+                {
+                  /* const date = new Date(daybydayplan.date); */
+                }
+                {
+                  /* const month = monthNames[date.getMonth()]; */
+                }
+                {
+                  /* const presentDay = date.getDate(); */
+                }
                 // get the month 1st 3 digit
-                {/* const presentDayMonth = presentDay.split(" ")[0].slice(0, 3); */}
+                {
+                  /* const presentDayMonth = presentDay.split(" ")[0].slice(0, 3); */
+                }
                 // make it so that 1st letter capital and all other small
                 {
                   /* const presentDayMonthCapitalized =
                   presentDayMonth.charAt(0).toUpperCase() +
                   presentDayMonth.slice(1).toLowerCase(); */
                 }
-                {/* const displayString = presentDayMonth + " " + presentDay; */}
+                {
+                  /* const displayString = presentDayMonth + " " + presentDay; */
+                }
                 const clickedID = "clicked-element " + index;
                 return (
                   <div
@@ -74,9 +89,25 @@ export default function DayByDayPlan({ plann }) {
               return (
                 <div key={index}>
                   <div id={presentId} className="pb-4 pt-4"></div>
-                  <h1 className="text-2xl font-semibold mb-4 min-w-full">
-                    {month + " " + presentDay}
-                  </h1>
+                  <div className="flex flex-row justify-start h-12 w-2/3 items-center">
+                    <h1 className="text-2xl font-semibold w-1/3 min-h-full  pl-2 pt-2">
+                      {month + " " + presentDay}
+                    </h1>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const state = {
+                          plan: daybydayplan,
+                          date: daybydayplan.date,
+                        };
+                        dispatch(setEditPlan(state));
+                        navigateTo("edit");
+                      }}
+                      className="text-white bg-gray-800 border-0 py-2 px-5 focus:outline-none hover:bg-gray-700 rounded-2xl text-lg"
+                    >
+                      Edit
+                    </button>
+                  </div>
                   {daybydayplan.cluster.map((event, index) => {
                     if (event.id >= 0)
                       return <TouristSpotCard key={index} event={event} />;

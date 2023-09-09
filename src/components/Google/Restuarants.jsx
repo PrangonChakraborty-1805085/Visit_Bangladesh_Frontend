@@ -15,7 +15,7 @@ const FoodPlacesMap = (props) => {
       try {
         console.log("sending request ...........");
         const response = await fetch(
-          "https://vb-backend-cbzw.onrender.com/api/foodPlace/home",
+          `${import.meta.env.VITE_BACKEND_URL}/api/foodPlace/home`,
           {
             method: "POST",
             body: JSON.stringify({

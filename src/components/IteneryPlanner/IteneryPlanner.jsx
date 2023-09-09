@@ -222,7 +222,7 @@ export default function IteneryPlanner() {
           {/* </div> */}
           <button
             type="submit"
-            className="text-white bg-gray-950 border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg"
+            className="text-white bg-black border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg"
           >
             See your trip
           </button>

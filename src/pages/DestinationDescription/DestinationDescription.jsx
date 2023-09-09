@@ -17,7 +17,9 @@ export default function DestinationDescription() {
       try {
         console.log("sending request from search ...........");
         const response = await fetch(
-          `https://vb-backend-cbzw.onrender.com/api/search/tourist_spot?tourist_spot_id=${id}`,
+          `${
+            import.meta.env.VITE_BACKEND_URL
+          }/api/search/tourist_spot?tourist_spot_id=${id}`,
           {
             method: "GET",
             headers: {

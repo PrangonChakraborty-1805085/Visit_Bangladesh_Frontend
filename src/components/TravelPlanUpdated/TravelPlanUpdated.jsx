@@ -33,7 +33,7 @@ export default function TravelPlanUpdated() {
       try {
         console.log("sending request ...........");
         const response = await fetch(
-          "https://vb-backend-cbzw.onrender.com/api/planner/initialPlan",
+          `${import.meta.env.VITE_BACKEND_URL}/api/planner/initialPlan`,
           {
             method: "POST",
             body: JSON.stringify(userInput),

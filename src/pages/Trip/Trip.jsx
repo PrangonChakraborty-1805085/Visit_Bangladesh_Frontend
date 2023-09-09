@@ -9,8 +9,11 @@ import Header_home from "../../components/Headers/Header_home";
 import { setPlan } from "../../redux/features/plan-slice";
 import Loading from "../../components/Loading/Loading";
 import Header_other from "../../components/Headers/Header_other";
+import { useNavigate } from "react-router-dom";
 
 export default function Trip() {
+  //navigator
+  const navigateTo = useNavigate();
   const currentUserBrowsingCity = useSelector(
     (state) => state.persistedPlanReducer.value.userLocation
   );
@@ -33,7 +36,7 @@ export default function Trip() {
       try {
         console.log("sending request ...........");
         const response = await fetch(
-          "https://vb-backend-cbzw.onrender.com/api/planner/initialPlan",
+          `${import.meta.env.VITE_BACKEND_URL}/api/planner/initialPlan`,
           {
             method: "POST",
             body: JSON.stringify(userInput),
@@ -57,22 +60,14 @@ export default function Trip() {
       setPlann(planData);
       setPlanLoading(false);
     } else {
-    // plan is not ready, fetch it first
-    setPlanLoading(true);
-    fetchData();
+      // plan is not ready, fetch it first
+      setPlanLoading(true);
+      fetchData();
     }
   }, [planData, userInput, dispatch]);
-  // const finalPlan = useSelector(
-  //   (state) => state.persistedPlanReducer.value.plan
-  // );
 
   //! for showing destinations in google map
-  // const places = [
-  //   { lat: 24.886436, lng: 91.880722 }, // Sylhet, BD
-  //   { lat: 23.811056, lng: 90.407608 }, // Dhaka , BD
-  //   { lat: 22.3419, lng: 91.815536 }, // Chittagong, BD
-  //   // Add more places as needed
-  // ];
+
   if (planLoading) {
     return (
       <section className="text-gray-600 body-font">
@@ -80,8 +75,7 @@ export default function Trip() {
         <Loading />
       </section>
     );
-  }
-  else {
+  } else {
     return (
       <section className="text-gray-600 min-w-full min-h-screen">
         <Header_other />
@@ -101,12 +95,21 @@ export default function Trip() {
             </div>
             <TripBar />
             <div className="flex flex-col sm:flex-row mt-10">
-              <div className="sm:w-2/3 text-center sm:pr-8 sm:py-8 flex flex-col items-center justify-center ">
+              <div className="sm:w-2/3 text-center sm:pr-8 sm:py-8 flex flex-col items-center justify-center">
                 <CityByCityRoute
                   startCity={currentUserBrowsingCity}
                   endCity={currentUserBrowsingCity}
                   destinations={plann.destinations}
                 />
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigateTo("editDestinations");
+                  }}
+                  className="text-white bg-black border-0 py-2 px-8 focus:outline-none hover:bg-gray-700 rounded-2xl text-lg"
+                >
+                  Edit
+                </button>
               </div>
               <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-700 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
                 <WrappedMapWithRoutes places={plann.destinations} />
