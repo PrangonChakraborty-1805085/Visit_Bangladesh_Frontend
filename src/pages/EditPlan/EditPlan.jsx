@@ -119,13 +119,14 @@ export default function EditPlan() {
           }
         );
         const jsonData = await response.json();
-        console.log("plan got from backend ", jsonData);
-        dispatch(setSuggestions(jsonData));
-        setMorePlacesToGo(jsonData);
+        console.log("suggestions got from backend ", jsonData);
+        setTimeout(() => {
+          dispatch(setSuggestions(jsonData));
+          setMorePlacesToGo(jsonData);
+          setSuggestionsLoading(false);
+        }, 1000); // Simulated delay of 2 seconds
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        setSuggestionsLoading(false);
       }
     }
     // check if already suggestions exists
@@ -137,7 +138,7 @@ export default function EditPlan() {
       setSuggestionsLoading(true);
       fetchData();
     }
-  }, []);
+  }, [date, dispatch, suggestions, wholePlan]);
 
   if (plan && !firstPlanUpdated) {
     const updatedPlan = plan.cluster.map((planItem) => ({
@@ -169,7 +170,7 @@ export default function EditPlan() {
   };
 
   return (
-    <>
+    <div>
       <Header_other />
       <Modal
         open={open}
@@ -275,7 +276,7 @@ export default function EditPlan() {
                   return (
                     <div
                       key={index}
-                      className="py-8  md:flex-nowrap rounded-lg shadow-lg mb-4 relative cursor-pointer "
+                      className="py-8 md:flex-nowrap rounded-lg shadow-lg mb-4 relative cursor-pointer "
                     >
                       <Checkbox
                         // checked={isChecked}
@@ -337,7 +338,9 @@ export default function EditPlan() {
                 </div>
               )}
               {!suggestionsloading && (
-                <AddSpotsCarousel newEvents={morePlacesToGo} />
+                <div className="py-8  md:flex-nowrap rounded-lg mb-4 w-[620px] ">
+                  <AddSpotsCarousel newEvents={morePlacesToGo} />
+                </div>
               )}
               <div className="w-full flex items-center justify-center pb-4 pt-10">
                 <button
@@ -382,10 +385,12 @@ export default function EditPlan() {
                     );
                     const jsonData = await response.json();
                     //updating the final plan
-                    dispatch(setPlan(jsonData));
+                    setTimeout(() => {
+                      dispatch(setPlan(jsonData));
+                      dispatch(resetSuggestions());
+                      dispatch(resetEditPlan());
+                    }, 2000); // Simulated delay of 2 seconds
                     // cleaning suggestions,edit plan stuffs
-                    dispatch(resetSuggestions());
-                    dispatch(resetEditPlan());
                     setUpdateButtonPressed(false);
                     e.target.innerHTML = "Update Plan";
 
@@ -402,6 +407,6 @@ export default function EditPlan() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

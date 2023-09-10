@@ -6,7 +6,7 @@ import CityByCityRoute from "./CityByCityRoute";
 import WrappedMapWithRoutes from "../../components/Google/Destinations_new";
 // import Header_other from "../../components/Headers/Header_other";
 import Header_home from "../../components/Headers/Header_home";
-import { setPlan } from "../../redux/features/plan-slice";
+import { setDestinations, setPlan } from "../../redux/features/plan-slice";
 import Loading from "../../components/Loading/Loading";
 import Header_other from "../../components/Headers/Header_other";
 import { useNavigate } from "react-router-dom";
@@ -59,13 +59,18 @@ export default function Trip() {
           for (let j = 0; j < jsonData.destinations.length - 1; j++) {
             filterdDestinations.push(jsonData.destinations[j]);
           }
+          let resultDestinations = [];
+          for (let j = 0; j < jsonData.destinations.length - 1; j++) {
+            resultDestinations.push(jsonData.destinations[j].name);
+          }
           setMapDestinations(filterdDestinations);
           setMapLoading(false);
           dispatch(setPlan(jsonData));
+          dispatch(setDestinations(resultDestinations));
           setPlann(jsonData);
           // console.log("here plan id after new plan ", jsonData.ID);
           setPlanLoading(false);
-        }, 2000); // Simulated delay of 2 seconds
+        }, 3000); // Simulated delay of 2 seconds
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -85,11 +90,16 @@ export default function Trip() {
         for (let j = 0; j < planData.destinations.length - 1; j++) {
           filterdDestinations.push(planData.destinations[j]);
         }
+        let resultDestinations = [];
+        for (let j = 0; j < planData.destinations.length - 1; j++) {
+          resultDestinations.push(planData.destinations[j].name);
+        }
         setMapDestinations(filterdDestinations);
+        dispatch(setDestinations(resultDestinations));
         setPlann(planData);
         setMapLoading(false);
         setPlanLoading(false);
-      }, 1000); // Simulated delay of 2 seconds
+      }, 2000); // Simulated delay of 2 seconds
     }
     // if (planLoading === true) {
 

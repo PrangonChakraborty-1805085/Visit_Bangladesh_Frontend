@@ -9,6 +9,7 @@ export default function Day_by_Day() {
   const currentPlan = useSelector(
     (state) => state.persistedPlanReducer.value.plan
   );
+  console.log("current plan in daybyday ", currentPlan);
 
   const handleScroll = () => {
     // Calculate the position of the end of the TripBar component

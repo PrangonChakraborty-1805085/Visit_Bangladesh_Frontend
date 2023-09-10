@@ -45,6 +45,9 @@ export default function ShowAllPlans() {
   return (
     <section className="text-gray-600 body-font">
       <Header_other />
+      <h1 className="text-3xl font-bold text-black text-center mt-10 ">
+        My Plans
+      </h1>
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-wrap -m-4">
           {allPlans.map((plan, index) => (

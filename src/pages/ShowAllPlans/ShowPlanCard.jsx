@@ -18,7 +18,10 @@ export default function ShowPlanCard({ plan }) {
   //modal handlers
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    console.log("in close modal");
+    setOpen(false);
+  };
 
   //dispatch for redux stuff
   const dispatch = useDispatch();
@@ -40,7 +43,7 @@ export default function ShowPlanCard({ plan }) {
   };
 
   return (
-    <div onClick={handleOpen} className="p-4 lg:w-1/4 md:w-1/2 cursor-pointer">
+    <div id={plan.plan_id} className="p-4 lg:w-1/4 md:w-1/2">
       <Modal
         open={open}
         onClose={handleClose}
@@ -51,13 +54,13 @@ export default function ShowPlanCard({ plan }) {
           <Typography id="modal-modal-title" variant="h7" component="h2">
             Your current plan progress will be lost
           </Typography>
-          <LoadingButton
-            loading={planGettingLoading}
-            loadingPosition="start"
+          <Button
             variant="outlined"
             onClick={(e) => {
               e.preventDefault();
-              e.target.innerHTML = "";
+              handleClose();
+              document.getElementById(`${plan.plan_id}`).style.opacity = "0.2";
+
               // send a request to get the plan with this plan id , after getting this plan, dispatch the plan and navigate to trip page
               async function fetchSinglePlan() {
                 try {
@@ -79,27 +82,26 @@ export default function ShowPlanCard({ plan }) {
                   const jsonData = await response.json();
                   //   console.log("plan got from backend ", jsonData);
                   dispatch(setPlan(jsonData));
-                } catch (error) {
-                  console.error("Error fetching data:", error);
-                } finally {
                   setPlanGettingLoading(false);
                   navigate(`/${user.email}/trip`);
+                } catch (error) {
+                  console.error("Error fetching data:", error);
                 }
               }
               setPlanGettingLoading(true);
               fetchSinglePlan();
+              //   handleClose();
             }}
           >
             Continue
-          </LoadingButton>
-          <LoadingButton
-            loading={false}
-            loadingPosition="start"
-            variant="outlined"
+          </Button>
+          <Button
             onClick={handleClose}
+            className="p-2 text-gray-900"
+            variant="text"
           >
             Cancel
-          </LoadingButton>
+          </Button>
         </Box>
       </Modal>
       <div className="h-full flex flex-col items-center text-center">
@@ -116,6 +118,13 @@ export default function ShowPlanCard({ plan }) {
             ...
           </p>
         </div>
+        <Button
+          onClick={handleOpen}
+          className="p-2 text-gray-900"
+          variant="outlined"
+        >
+          Show
+        </Button>
       </div>
     </div>
   );

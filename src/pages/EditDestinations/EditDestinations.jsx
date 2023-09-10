@@ -62,9 +62,9 @@ export default function EditDestinations() {
 
   //states to store things
   const [dests, setDests] = useState(alreadySelectedDestinations);
-  const [starttDate, setStarttDate] = useState(alreadySelectedStartDate);
-  const [enddDate, setEnddDate] = useState(alreadySelectedEndDate);
-  const [guests, setGuests] = useState(alreadySelectedNoOfGuests);
+  const [starttDate, setStarttDate] = useState("");
+  const [enddDate, setEnddDate] = useState("");
+  const [guests, setGuests] = useState("");
 
   //create a state to handle selected destinations
   const [selectedDestinations, setSelectedDestinations] = useState(
