@@ -63,11 +63,14 @@ export default function Trip() {
           setMapLoading(false);
           dispatch(setPlan(jsonData));
           setPlann(jsonData);
-        }, 1000); // Simulated delay of 2 seconds
+          console.log("here");
+          setPlanLoading(false);
+        }, 2000); // Simulated delay of 2 seconds
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        setPlanLoading(false);
+        // console.log("plann got from backend in trip ", plann);
+        // console.log("planData got from backend in trip ", planData);
       }
     }
     // check if already plan exists
@@ -103,7 +106,7 @@ export default function Trip() {
     //     setMapLoading(false); // Set loading to false after update is complete
     //   }, 1000); // Simulated delay of 2 seconds
     // }
-  }, [dispatch, planData, planLoading, userInput,mapLoading]);
+  }, [dispatch, planData, planLoading, userInput, mapLoading]);
 
   //! for showing destinations in google map
 
@@ -129,7 +132,7 @@ export default function Trip() {
             </div>
             <div className="absolute inset-0 flex mb-40 items-center justify-center bg-opacity-75">
               <h1 className="text-4xl md:text-6xl font-bold text-white text-center">
-                {planData.planName}
+                {plann.planName}
               </h1>
             </div>
             <TripBar />
@@ -138,7 +141,7 @@ export default function Trip() {
                 <CityByCityRoute
                   startCity={currentUserBrowsingCity}
                   endCity={currentUserBrowsingCity}
-                  destinations={planData.destinations}
+                  destinations={plann.destinations}
                 />
                 <button
                   onClick={(e) => {
