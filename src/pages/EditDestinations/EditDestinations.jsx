@@ -304,6 +304,7 @@ export default function EditDestinations() {
               {!mapLoading && (
                 <WrappedMapWithRoutes places={selectedLocations} />
               )}
+              {mapLoading && <h1>loading...</h1>}
             </div>
           </div>
         </div>
