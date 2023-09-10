@@ -386,6 +386,9 @@ export default function EditPlan() {
                     // cleaning suggestions,edit plan stuffs
                     dispatch(resetSuggestions());
                     dispatch(resetEditPlan());
+                    setUpdateButtonPressed(false);
+                    e.target.innerHTML = "Update Plan";
+
                     navigateTo(`/${user ? user.email : "random"}/trip`);
                   }}
                   className={`text-white bg-black border-2  py-2 px-10 focus:outline-none hover:bg-gray-700  text-lg font-medium w-full ${

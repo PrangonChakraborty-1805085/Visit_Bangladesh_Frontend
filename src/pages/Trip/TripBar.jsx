@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/firebase";
@@ -36,6 +36,8 @@ export default function TripBar() {
     (state) => state.persistedPlanReducer.value.plan
   );
 
+  const navigate = useNavigate();
+
   const savePlan = (e) => {
     e.preventDefault();
     document.getElementById("save").disabled = true;
@@ -55,13 +57,15 @@ export default function TripBar() {
           }
         );
         const status = response.status;
-        const jsonData = response.data;
+
+        // console.log("plan again got from backend after saving ", response);
         if (status === 200) {
           // show the success notification
+          const jsonData = await response.json();
           Store.addNotification({
             ...notification,
             dismiss: {
-              duration: 2000,
+              duration: 3000,
               pauseOnHover: true,
             },
             touchSlidingExit: {
@@ -77,7 +81,12 @@ export default function TripBar() {
               },
             },
           });
-          dispatch(setPlan(jsonData));
+          setSaveButtonVal("Save");
+          document.getElementById("save").disabled = false;
+          setTimeout(() => {
+            dispatch(setPlan(jsonData));
+          }, 2000); // Simulated delay of 2 seconds
+          navigate(`/${user.email}/trip`);
         } else {
           // show the failure notification
           Store.addNotification({

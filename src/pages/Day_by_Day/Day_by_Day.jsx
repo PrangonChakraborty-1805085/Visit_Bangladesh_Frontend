@@ -22,10 +22,10 @@ export default function Day_by_Day() {
       setIsTripBarFixed(false);
     }
   };
-  if (performance.getEntriesByType("navigation")[0].type === "navigate") {
-    // Perform a one-time refresh
-    window.location.reload();
-  }
+  // if (performance.getEntriesByType("navigation")[0].type === "navigate") {
+  //   // Perform a one-time refresh
+  //   window.location.reload();
+  // }
 
   // Attach the scroll event listener
   useEffect(() => {

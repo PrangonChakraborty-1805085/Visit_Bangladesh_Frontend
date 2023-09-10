@@ -63,7 +63,7 @@ export default function Trip() {
           setMapLoading(false);
           dispatch(setPlan(jsonData));
           setPlann(jsonData);
-          console.log("here");
+          // console.log("here plan id after new plan ", jsonData.ID);
           setPlanLoading(false);
         }, 2000); // Simulated delay of 2 seconds
       } catch (error) {
@@ -77,6 +77,7 @@ export default function Trip() {
     if (!planData) {
       // plan is not ready, fetch it first
       // setPlanLoading(true);
+      console.log("plan is not saved so calling ");
       fetchData();
     } else if (planData && mapLoading == true) {
       setTimeout(() => {
@@ -85,13 +86,16 @@ export default function Trip() {
           filterdDestinations.push(planData.destinations[j]);
         }
         setMapDestinations(filterdDestinations);
+        setPlann(planData);
         setMapLoading(false);
-      }, 1000); // Simulated delay of 2 seconds
-    } else {
-      if (planLoading === true) {
         setPlanLoading(false);
-      }
+      }, 1000); // Simulated delay of 2 seconds
     }
+    // if (planLoading === true) {
+
+    //   setPlanLoading(false);
+    // }
+
     // if (!mapDestinations) {
     //   setMapLoading(true); // Set loading to true before updating event
 

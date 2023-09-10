@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 
 const BookingWidget = ({ latitude, longitude, landmarkName, address }) => {
   useEffect(() => {
-    // const dependencies = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    // dependencies.forEach((dependency) => {
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.async = true;
@@ -14,7 +12,6 @@ const BookingWidget = ({ latitude, longitude, landmarkName, address }) => {
     return () => {
       document.getElementsByTagName("head")[0].removeChild(script);
     };
-    // });
   }, []);
 
   return (
