@@ -73,6 +73,10 @@ export default function Header_home() {
   const handleLogOut = () => {
     logout();
   };
+  const handleMyPlans = (e) => {
+    e.preventDefault();
+    navigateTo(`/${user.email}/myPlans`);
+  };
   return (
     <header className={`text-gray-800 bg-transparent fixed w-full top-0 z-10`}>
       {!user && (
@@ -169,6 +173,16 @@ export default function Header_home() {
               className={`inline-flex text-white items-center border-2 pl-6 pr-6 py-2 px-4 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full text-base mt-4 md:mt-0 border-white`}
             >
               Sign Up
+            </button>
+          </NavLink>
+        )}
+        {user && (
+          <NavLink>
+            <button
+              onClick={handleMyPlans}
+              className={`inline-flex text-white items-center bg-transparent border-2 pl-6 pr-6 py-2 px-4 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full text-base mt-4 mr-4 md:mt-0`}
+            >
+              My Plans
             </button>
           </NavLink>
         )}

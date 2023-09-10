@@ -23,7 +23,7 @@ const MapWithRoutes = ({ google, placess, apiKey }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log("sending request ...........");
+        console.log("sending request to get map with routes ...........");
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/direction/home`,
           {

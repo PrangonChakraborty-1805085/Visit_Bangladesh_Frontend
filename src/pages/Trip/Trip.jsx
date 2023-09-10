@@ -32,10 +32,16 @@ export default function Trip() {
       currentCity: currentUserBrowsingCity,
     };
   });
+
+  //destinations state to show in map
+  const [mapDestinations, setMapDestinations] = useState(null);
+  const [mapLoading, setMapLoading] = useState(true);
+  // const [mapLoading, setMapLoading] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log("sending request ...........");
+        console.log("sending request to get the trip ...........");
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/planner/initialPlan`,
           {
@@ -48,8 +54,16 @@ export default function Trip() {
         );
         const jsonData = await response.json();
         // console.log("plan got from backend");
-        dispatch(setPlan(jsonData));
-        setPlann(jsonData);
+        setTimeout(() => {
+          let filterdDestinations = [];
+          for (let j = 0; j < jsonData.destinations.length - 1; j++) {
+            filterdDestinations.push(jsonData.destinations[j]);
+          }
+          setMapDestinations(filterdDestinations);
+          setMapLoading(false);
+          dispatch(setPlan(jsonData));
+          setPlann(jsonData);
+        }, 1000); // Simulated delay of 2 seconds
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -57,15 +71,39 @@ export default function Trip() {
       }
     }
     // check if already plan exists
-    if (planData) {
-      setPlann(planData);
-      setPlanLoading(false);
-    } else {
+    if (!planData) {
       // plan is not ready, fetch it first
-      setPlanLoading(true);
+      // setPlanLoading(true);
       fetchData();
+    } else if (planData && mapLoading == true) {
+      setTimeout(() => {
+        let filterdDestinations = [];
+        for (let j = 0; j < planData.destinations.length - 1; j++) {
+          filterdDestinations.push(planData.destinations[j]);
+        }
+        setMapDestinations(filterdDestinations);
+        setMapLoading(false);
+      }, 1000); // Simulated delay of 2 seconds
+    } else {
+      if (planLoading === true) {
+        setPlanLoading(false);
+      }
     }
-  }, [planData, userInput, dispatch]);
+    // if (!mapDestinations) {
+    //   setMapLoading(true); // Set loading to true before updating event
+
+    //   // Simulate an asynchronous update (you can replace this with your actual update logic)
+    //   setTimeout(() => {
+    //     //remove the last destination from the plann.destinations
+    //     let filterdDestinations = [];
+    //     for (let j = 0; j < planData.destinations.length - 1; j++) {
+    //       filterdDestinations.push(planData.destinations[j]);
+    //     }
+    //     setMapDestinations(filterdDestinations);
+    //     setMapLoading(false); // Set loading to false after update is complete
+    //   }, 1000); // Simulated delay of 2 seconds
+    // }
+  }, [dispatch, planData, planLoading, userInput,mapLoading]);
 
   //! for showing destinations in google map
 
@@ -91,29 +129,32 @@ export default function Trip() {
             </div>
             <div className="absolute inset-0 flex mb-40 items-center justify-center bg-opacity-75">
               <h1 className="text-4xl md:text-6xl font-bold text-white text-center">
-                {plann.planName}
+                {planData.planName}
               </h1>
             </div>
             <TripBar />
-            <div className="flex flex-col sm:flex-row mt-10">
+            <div className="flex flex-col sm:flex-row mt-10 bg-gray-100">
               <div className="sm:w-2/3 text-center sm:pr-8 sm:py-8 flex flex-col items-center justify-center">
                 <CityByCityRoute
                   startCity={currentUserBrowsingCity}
                   endCity={currentUserBrowsingCity}
-                  destinations={plann.destinations}
+                  destinations={planData.destinations}
                 />
                 <button
                   onClick={(e) => {
                     e.preventDefault();
                     navigateTo("editDestinations");
                   }}
-                  className="text-white bg-black border-0 py-2 px-8 focus:outline-none hover:bg-gray-700 rounded-2xl text-lg"
+                  className="text-white bg-black border-0 py-2 px-10 focus:outline-none hover:bg-gray-700 rounded-2xl text-lg mt-5"
                 >
                   Edit
                 </button>
               </div>
               <div className="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-700 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left">
-                <WrappedMapWithRoutes places={plann.destinations} />
+                {!mapLoading && (
+                  <WrappedMapWithRoutes places={mapDestinations} />
+                )}
+                {mapLoading && "Loading.."}
               </div>
             </div>
           </div>

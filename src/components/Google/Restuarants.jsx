@@ -13,7 +13,7 @@ const FoodPlacesMap = (props) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log("sending request ...........");
+        console.log("sending request to get restuarants ...........");
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/foodPlace/home`,
           {

@@ -2,15 +2,19 @@ import React, { useEffect } from "react";
 
 const BookingWidget = ({ latitude, longitude, landmarkName, address }) => {
   useEffect(() => {
+    // const dependencies = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    // dependencies.forEach((dependency) => {
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.async = true;
     script.src = `//cf.bstatic.com/static/affiliate_base/js/flexiproduct.js?v=${+new Date()}`;
     document.getElementsByTagName("head")[0].appendChild(script);
 
+    console.log("in useEffect of hotel");
     return () => {
       document.getElementsByTagName("head")[0].removeChild(script);
     };
+    // });
   }, []);
 
   return (

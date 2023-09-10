@@ -24,4 +24,5 @@ export const store = configureStore({
   },
   middleware: [thunk],
 });
+
 export const persistor = persistStore(store);

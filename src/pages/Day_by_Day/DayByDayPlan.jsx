@@ -6,6 +6,7 @@ import HotelCard from "./HotelCard";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setEditPlan } from "../../redux/features/edit-plan-slice";
+import { MdDriveEta } from "react-icons/md";
 
 export default function DayByDayPlan({ plann }) {
   const handleClick = (index) => {
@@ -89,6 +90,18 @@ export default function DayByDayPlan({ plann }) {
               return (
                 <div key={index}>
                   <div id={presentId} className="pb-4 pt-4"></div>
+                  <div className="flex flex-row  w-full justify-center h-12 items-center mb-5">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        //search by this location name
+                        navigateTo("/search?query=" + daybydayplan.location);
+                      }}
+                      className="text-black bg-transparent border-2 border-black py-2 px-24 focus:outline-none hover:bg-gray-100 text-lg"
+                    >
+                      Explore {daybydayplan.location}
+                    </button>
+                  </div>
                   <div className="flex flex-row justify-start h-12 w-2/3 items-center">
                     <h1 className="text-2xl font-semibold w-1/3 min-h-full  pl-2 pt-2">
                       {month + " " + presentDay}
@@ -110,23 +123,29 @@ export default function DayByDayPlan({ plann }) {
                   </div>
                   {daybydayplan.cluster.map((event, index) => {
                     if (event.id >= 0)
-                      return <TouristSpotCard key={index} event={event} />;
-                    else return <RestuarantCard key={index} event={event} />;
+                      return (
+                        <div>
+                          {index > 0 && (
+                            <div className="container  flex flex-row items-center justify-start p-2  cursor-pointer">
+                              <MdDriveEta className="text-lg text-black mr-5" />
+                              <h2 className="text-xs mr-2 text-gray-700">
+                                Drive
+                              </h2>
+                            </div>
+                          )}
+                          <TouristSpotCard key={index} event={event} />
+                        </div>
+                      );
+                    else return <RestuarantCard key={index} event={event} />
                   })}
-                  <HotelCard key={index} event={daybydayplan.hotel} />;
+                  <HotelCard key={index} event={daybydayplan.hotel} />
+                  {daybydayplan.travel && (
+                    <TravelCard event={daybydayplan.travel} />
+                  )}
                 </div>
               );
             })}
-            {/* <TravelCard />
-            <TouristSpotCard />
-            <RestuarantCard />
-            <HotelCard /> */}
           </div>
-          {/* <div className="w-1/3">
-            <div className="bg-yellow-950 flex justify-center h-full">
-              <TouristSpotCard />
-            </div>
-          </div> */}
         </div>
       </div>
     </section>

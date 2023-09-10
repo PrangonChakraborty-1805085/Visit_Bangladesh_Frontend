@@ -144,7 +144,10 @@ export default function IteneryPlanner() {
                 "Dhaka",
                 "Chittagong",
                 "Rajshahi",
-                "Kushtia",
+                "Barisal",
+                "Khulna",
+                "Rangpur",
+                "Mymensingh",
               ];
               // now make a filteredOptions that includes that options that are not in the selectedDestinations
               const filteredOptions = MainOptions.filter(

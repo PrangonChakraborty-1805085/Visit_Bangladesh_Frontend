@@ -18,6 +18,7 @@ import Search from "./pages/Search/Search";
 import DestinationDescription from "./pages/DestinationDescription/DestinationDescription";
 import EditPlan from "./pages/EditPlan/EditPlan";
 import EditDestinations from "./pages/EditDestinations/EditDestinations";
+import ShowAllPlans from "./pages/ShowAllPlans/ShowAllPlans";
 
 // Define the ScrollToTopOnRouteChange component
 function ScrollToTopOnRouteChange() {
@@ -48,6 +49,15 @@ const router = createBrowserRouter(
           <>
             {/* <MapContainer /> */}
             <Trip />
+          </>
+        }
+      />
+      <Route
+        path=":username/myPlans"
+        element={
+          <>
+            {/* <MapContainer /> */}
+            <ShowAllPlans />
           </>
         }
       />

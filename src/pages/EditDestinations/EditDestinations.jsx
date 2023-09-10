@@ -20,7 +20,10 @@ export default function EditDestinations() {
     { name: "Dhaka", lat: 23.811056, lng: 90.407608 },
     { name: "Chittagong", lat: 22.3419, lng: 91.815536 },
     { name: "Rajshahi", lat: 24.3635886, lng: 88.6241351 },
-    { name: "Kushtia", lat: 23.901258, lng: 89.120482 },
+    { name: "Barisal", lat: 22.701, lng: 90.3535 },
+    { name: "Khulna", lat: 22.8456, lng: 89.5403 },
+    { name: "Rangpur", lat: 25.7439, lng: 89.2752 },
+    { name: "Mymensingh", lat: 24.7471, lng: 90.4203 },
   ];
 
   //state to store the selected destinations for showing in map
@@ -207,7 +210,10 @@ export default function EditDestinations() {
                       "Dhaka",
                       "Chittagong",
                       "Rajshahi",
-                      "Kushtia",
+                      "Barisal",
+                      "Khulna",
+                      "Rangpur",
+                      "Mymensingh",
                     ];
                     // now make a filteredOptions that includes that options that are not in the selectedDestinations
                     const filteredOptions = MainOptions.filter(
@@ -298,7 +304,6 @@ export default function EditDestinations() {
               {!mapLoading && (
                 <WrappedMapWithRoutes places={selectedLocations} />
               )}
-              {mapLoading && "Loading.."}
             </div>
           </div>
         </div>
