@@ -83,7 +83,10 @@ export default function ShowPlanCard({ plan }) {
                   //   console.log("plan got from backend ", jsonData);
                   dispatch(setPlan(jsonData));
                   setPlanGettingLoading(false);
-                  navigate(`/${user.email}/trip`);
+                  const email = user.email;
+                  const parts = email.split("@");
+                  const substringBeforeAtSymbol = parts[0];
+                  navigate(`/${substringBeforeAtSymbol}/trip`);
                 } catch (error) {
                   console.error("Error fetching data:", error);
                 }

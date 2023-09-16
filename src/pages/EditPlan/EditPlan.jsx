@@ -44,7 +44,7 @@ export default function EditPlan() {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    
+
     width: 400,
     bgcolor: "background.paper",
     border: "2px solid #000",
@@ -394,8 +394,8 @@ export default function EditPlan() {
                     // cleaning suggestions,edit plan stuffs
                     setUpdateButtonPressed(false);
                     e.target.innerHTML = "Update Plan";
-
-                    navigateTo(`/${user ? user.email : "random"}/trip`);
+                    const username = user.email.split("@")[0];
+                    navigateTo(`/${user ? username : "random"}/trip`);
                   }}
                   className={`text-white bg-black border-2  py-2 px-10 focus:outline-none hover:bg-gray-700  text-lg font-medium w-full ${
                     updateButtonPressed ? "bg-gray-700" : ""

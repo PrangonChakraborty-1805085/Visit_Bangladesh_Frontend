@@ -75,7 +75,10 @@ export default function Header_home() {
   };
   const handleMyPlans = (e) => {
     e.preventDefault();
-    navigateTo(`/${user.email}/myPlans`);
+    const email = user.email;
+    const parts = email.split("@");
+    const substringBeforeAtSymbol = parts[0];
+    navigateTo(`/${substringBeforeAtSymbol}/myPlans`);
   };
   return (
     <header className={`text-gray-800 bg-transparent fixed w-full top-0 z-10`}>

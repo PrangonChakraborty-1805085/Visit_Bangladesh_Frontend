@@ -86,7 +86,10 @@ export default function TripBar() {
           setTimeout(() => {
             dispatch(setPlan(jsonData));
           }, 2000); // Simulated delay of 2 seconds
-          navigate(`/${user.email}/trip`);
+          const email = user.email;
+          const parts = email.split("@");
+          const substringBeforeAtSymbol = parts[0];
+          navigate(`/${substringBeforeAtSymbol}/trip`);
         } else {
           // show the failure notification
           Store.addNotification({
@@ -127,7 +130,9 @@ export default function TripBar() {
       <div className="container mx-auto flex flex-wrap flex-col md:flex-row items-center">
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
           <NavLink
-            to={user ? "/" + user.email + "/trip" : "/random/trip"}
+            to={
+              user ? "/" + user.email.split("@")[0] + "/trip" : "/random/trip"
+            }
             className={`mr-5 hover:text-gray-900 relative hover:bg-slate-200 p-3 border-b-2 ${
               endPath == "trip" ? "border-gray-900" : "border-transparent"
             }`}
@@ -138,7 +143,7 @@ export default function TripBar() {
           <NavLink
             to={
               user
-                ? "/" + user.email + "/trip/day_by_day"
+                ? "/" + user.email.split("@")[0] + "/trip/day_by_day"
                 : "/random/trip/day_by_day"
             }
             className={`mr-5 hover:text-gray-900 relative hover:bg-slate-200 p-3 border-b-2 ${

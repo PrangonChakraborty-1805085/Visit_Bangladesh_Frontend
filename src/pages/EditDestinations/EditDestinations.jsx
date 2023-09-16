@@ -187,7 +187,7 @@ export default function EditDestinations() {
       navigateTo("/random/trip");
     } else {
       // get the letters before '@' from the email
-      const username = user.email;
+      const username = user.email.split("@")[0];
       navigateTo(`/${username}/trip`);
       // If user is not logged in, navigate to random/day_by_day
     }

@@ -74,7 +74,10 @@ export default function Header_other() {
 
   const handleMyPlans = (e) => {
     e.preventDefault();
-    navigateTo(`/${user.email}/myPlans`);
+    const email = user.email;
+    const parts = email.split("@");
+    const substringBeforeAtSymbol = parts[0];
+    navigateTo(`/${substringBeforeAtSymbol}/myPlans`);
   };
 
   return (
