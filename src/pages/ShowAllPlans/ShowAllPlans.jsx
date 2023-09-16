@@ -7,8 +7,11 @@ import ShowPlanCard from "./ShowPlanCard";
 
 export default function ShowAllPlans() {
   const [user, loading, error] = useAuthState(auth);
-  const [allPlans, setAllPlans] = useState();
+  const [allPlans, setAllPlans] = useState([]);
   const [plansloading, setPlansLoading] = useState(true);
+  console.log("User", user);
+  //print plansloading
+  console.log("plans loading ", plansloading);
   useEffect(() => {
     async function fetchMyPlans() {
       try {
@@ -26,14 +29,14 @@ export default function ShowAllPlans() {
         );
         const jsonData = await response.json();
         setAllPlans(jsonData);
+        setPlansLoading(false);
+        console.log("My plans got from backend");
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        setPlansLoading(false);
       }
     }
     fetchMyPlans();
-  }, []);
+  }, [user?.email]);
   if (plansloading) {
     return (
       <section className="text-gray-600 body-font">
@@ -41,20 +44,21 @@ export default function ShowAllPlans() {
         <Loading />
       </section>
     );
-  }
-  return (
-    <section className="text-gray-600 body-font">
-      <Header_other />
-      <h1 className="text-3xl font-bold text-black text-center mt-10 ">
-        My Plans
-      </h1>
-      <div className="container px-5 py-24 mx-auto">
-        <div className="flex flex-wrap -m-4">
-          {allPlans.map((plan, index) => (
-            <ShowPlanCard key={index} plan={plan} />
-          ))}
+  } else {
+    return (
+      <section className="text-gray-600 body-font">
+        <Header_other />
+        <h1 className="text-3xl font-bold text-black text-center mt-10 ">
+          My Plans
+        </h1>
+        <div className="container px-5 py-24 mx-auto">
+          <div className="flex flex-wrap -m-4">
+            {allPlans.map((plan, index) => (
+              <ShowPlanCard key={index} plan={plan} />
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
-  );
+      </section>
+    );
+  }
 }

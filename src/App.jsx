@@ -56,7 +56,6 @@ const router = createBrowserRouter(
         path=":username/myPlans"
         element={
           <>
-            {/* <MapContainer /> */}
             <ShowAllPlans />
           </>
         }
