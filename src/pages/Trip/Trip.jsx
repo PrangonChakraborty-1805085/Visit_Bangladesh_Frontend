@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import TripBar from "./TripBar";
-import tripBackground from "./trip_background_6.jpg";
+import tripBackground from "./bandarban2.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import CityByCityRoute from "./CityByCityRoute";
 import WrappedMapWithRoutes from "../../components/Google/Destinations_new";
 // import Header_other from "../../components/Headers/Header_other";
-import Header_home from "../../components/Headers/Header_home";
-import { setDestinations, setPlan } from "../../redux/features/plan-slice";
+import { setDestinations } from "../../redux/features/plan-slice";
 import Loading from "../../components/Loading/Loading";
 import Header_other from "../../components/Headers/Header_other";
 import { useNavigate } from "react-router-dom";
@@ -14,23 +13,14 @@ import { useNavigate } from "react-router-dom";
 export default function Trip() {
   //navigator
   const navigateTo = useNavigate();
-  const currentUserBrowsingCity = useSelector(
-    (state) => state.persistedPlanReducer.value.userLocation
-  );
+  // const currentUserBrowsingCity = useSelector(
+  //   (state) => state.persistedPlanReducer.value.userLocation
+  // );
   const [plann, setPlann] = useState(null);
   const dispatch = useDispatch();
   const [planLoading, setPlanLoading] = useState(true);
   const planData = useSelector((state) => {
-    return state.persistedPlanReducer.value.plan; // Return the specific data you need
-  });
-  const userInput = useSelector((state) => {
-    return {
-      destinations: state.persistedPlanReducer.value.destinations,
-      startDate: state.persistedPlanReducer.value.start_date,
-      endDate: state.persistedPlanReducer.value.end_date,
-      guest: state.persistedPlanReducer.value.noOfGuests,
-      currentCity: currentUserBrowsingCity,
-    };
+    return state.persistedPlanReducer.value.plan;
   });
 
   //destinations state to show in map
@@ -39,88 +29,25 @@ export default function Trip() {
   // const [mapLoading, setMapLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        console.log("sending request to get the trip ...........");
-        const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/planner/initialPlan`,
-          {
-            method: "POST",
-            body: JSON.stringify(userInput),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const jsonData = await response.json();
-        // console.log("plan got from backend");
-        setTimeout(() => {
-          let filterdDestinations = [];
-          for (let j = 0; j < jsonData.destinations.length - 1; j++) {
-            filterdDestinations.push(jsonData.destinations[j]);
-          }
-          let resultDestinations = [];
-          for (let j = 0; j < jsonData.destinations.length - 1; j++) {
-            resultDestinations.push(jsonData.destinations[j].name);
-          }
-          setMapDestinations(filterdDestinations);
-          setMapLoading(false);
-          dispatch(setPlan(jsonData));
-          dispatch(setDestinations(resultDestinations));
-          setPlann(jsonData);
-          // console.log("here plan id after new plan ", jsonData.ID);
-          setPlanLoading(false);
-        }, 3000); // Simulated delay of 2 seconds
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        // console.log("plann got from backend in trip ", plann);
-        // console.log("planData got from backend in trip ", planData);
+    setTimeout(() => {
+      let filterdDestinations = [];
+      for (let j = 0; j < planData.destinations.length - 1; j++) {
+        //! modified
+        filterdDestinations.push(planData.destinations[j]);
       }
-    }
-    // check if already plan exists
-    if (!planData) {
-      // plan is not ready, fetch it first
-      // setPlanLoading(true);
-      console.log("plan is not saved so calling ");
-      fetchData();
-    } else if (planData && mapLoading == true) {
-      setTimeout(() => {
-        let filterdDestinations = [];
-        for (let j = 0; j < planData.destinations.length - 1; j++) {
-          filterdDestinations.push(planData.destinations[j]);
-        }
-        let resultDestinations = [];
-        for (let j = 0; j < planData.destinations.length - 1; j++) {
-          resultDestinations.push(planData.destinations[j].name);
-        }
-        setMapDestinations(filterdDestinations);
-        dispatch(setDestinations(resultDestinations));
-        setPlann(planData);
-        setMapLoading(false);
-        setPlanLoading(false);
-      }, 2000); // Simulated delay of 2 seconds
-    }
-    // if (planLoading === true) {
-
-    //   setPlanLoading(false);
-    // }
-
-    // if (!mapDestinations) {
-    //   setMapLoading(true); // Set loading to true before updating event
-
-    //   // Simulate an asynchronous update (you can replace this with your actual update logic)
-    //   setTimeout(() => {
-    //     //remove the last destination from the plann.destinations
-    //     let filterdDestinations = [];
-    //     for (let j = 0; j < planData.destinations.length - 1; j++) {
-    //       filterdDestinations.push(planData.destinations[j]);
-    //     }
-    //     setMapDestinations(filterdDestinations);
-    //     setMapLoading(false); // Set loading to false after update is complete
-    //   }, 1000); // Simulated delay of 2 seconds
-    // }
-  }, [dispatch, planData, planLoading, userInput, mapLoading]);
+      let resultDestinations = [];
+      for (let j = 0; j < planData.destinations.length - 1; j++) {
+        //! modified
+        resultDestinations.push(planData.destinations[j].name);
+      }
+      setMapDestinations(filterdDestinations);
+      dispatch(setDestinations(resultDestinations));
+      setPlann(planData); //! modified
+      setMapLoading(false);
+      setPlanLoading(false);
+    }, 2000); // Simulated delay of 2 seconds
+    console.log("-------again printing my plan ", planData);
+  }, [dispatch, planData, planLoading, mapLoading]);
 
   //! for showing destinations in google map
 
@@ -153,8 +80,8 @@ export default function Trip() {
             <div className="flex flex-col sm:flex-row mt-10 bg-gray-100">
               <div className="sm:w-2/3 text-center sm:pr-8 sm:py-8 flex flex-col items-center justify-center">
                 <CityByCityRoute
-                  startCity={currentUserBrowsingCity}
-                  endCity={currentUserBrowsingCity}
+                  startCity="Dhaka"
+                  endCity="Dhaka"
                   destinations={plann.destinations}
                 />
                 <button

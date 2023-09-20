@@ -7,7 +7,8 @@ import {
   setDestinations,
   setEndDate,
   setStartDate,
-  setNoOfGuests,
+  setTotalBudget,
+  setPreferences,
 } from "../../redux/features/plan-slice"; // this is the plan slice where I will store the plan
 import { useDispatch } from "react-redux"; // dispatch is used to call the setPlan function, it can not be called automatically
 
@@ -23,7 +24,7 @@ export default function IteneryPlanner() {
   const [dests, setDests] = useState([""]);
   const [starttDate, setStarttDate] = useState("");
   const [enddDate, setEnddDate] = useState("");
-  const [guests, setGuests] = useState("");
+  const [budget, setBudget] = useState("");
 
   //create a state to handle selected destinations
   const [selectedDestinations, setSelectedDestinations] = useState([]);
@@ -66,8 +67,34 @@ export default function IteneryPlanner() {
     setEnddDate(e.target.value);
   };
 
-  const handleGuestsChange = (e) => {
-    setGuests(e.target.value);
+  const handleBudgetChange = (e) => {
+    setBudget(e.target.value);
+  };
+
+  const preferences = [
+    "Beach",
+    "Mountain",
+    "Historical",
+    "Museum",
+    "Water",
+    "Nightlife",
+    "Locality",
+    "Wildlife",
+    "Nature",
+  ];
+  const [selectedPreferences, setSelectedPreferences] = useState([]);
+
+  const handleCheckboxChange = (event) => {
+    const preference = event.target.value;
+    if (event.target.checked) {
+      // If the checkbox is checked, add the preference to the selectedPreferences array
+      setSelectedPreferences((prevState) => [...prevState, preference]);
+    } else {
+      // If the checkbox is unchecked, remove the preference from the selectedPreferences array
+      setSelectedPreferences((prevState) =>
+        prevState.filter((item) => item !== preference)
+      );
+    }
   };
 
   const handleSubmit = (e) => {
@@ -81,10 +108,11 @@ export default function IteneryPlanner() {
     const todayDateObject = new Date(todayDateString);
     const startDateObject = new Date(starttDate);
     const endDateObject = new Date(enddDate);
-    if (startDateObject < todayDateObject) {
-      alert("Start date can not be before today");
-      return;
-    }
+    //TODO: this constraint was turned off just to demostrate the checklist functionality
+    // if (startDateObject < todayDateObject) {
+    //   alert("Start date can not be before today");
+    //   return;
+    // }
     if (endDateObject < todayDateObject) {
       alert("End date can not be before today");
       return;
@@ -93,28 +121,33 @@ export default function IteneryPlanner() {
       alert("End date can not be before start date");
       return;
     }
+    if (budget < 3000) {
+      alert("Budget is too low");
+      return;
+    }
 
     const formData = {
       destinations: selectedDestinations.map((dest) => dest),
       starttDate,
       enddDate,
-      guests,
+      budget,
     };
     dispatch(setDestinations(formData.destinations));
     dispatch(setStartDate(formData.starttDate));
     dispatch(setEndDate(formData.enddDate));
-    dispatch(setNoOfGuests(formData.guests));
+    dispatch(setPreferences(selectedPreferences));
+    dispatch(setTotalBudget(formData.budget));
 
     // print the form data
     // console.log("data in hero form : ", formData);
     // console.log("current user : ", username);
     if (!user) {
       // If user is logged in, navigate to username/day_by_day
-      navigateTo("/random/trip");
+      navigateTo("/random/allPlans");
     } else {
       // get the letters before '@' from the email
       const username = user.email.split("@")[0];
-      navigateTo(`/${username}/trip`);
+      navigateTo(`/${username}/allPlans`);
       // If user is not logged in, navigate to random/day_by_day
     }
   };
@@ -216,13 +249,36 @@ export default function IteneryPlanner() {
           <input
             type="number"
             name="guest_num"
-            value={guests}
-            onChange={handleGuestsChange}
+            value={budget}
+            onChange={handleBudgetChange}
             className="w-full p-[2%] md:p-[2%] lg:p-[2%] xl:p-[2%] my-1 md:my-1 lg:my-1 xl:my-1 border-[1px] border-gray-300 rounded outline-black"
-            placeholder="Guests"
+            placeholder="Your Approximate Budget"
             required
           />
           {/* </div> */}
+          <div className="grid grid-cols-3 gap-4 mt-3 mb-3">
+            {/* make checkbox for each options in the preferences */}
+            {preferences.map((preference, index) => {
+              return (
+                <div key={index} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    name={preference}
+                    value={preference}
+                    onChange={handleCheckboxChange}
+                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  />
+                  <label
+                    htmlFor={preference}
+                    className="ml-2 block text-sm text-gray-900"
+                  >
+                    {preference}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+
           <button
             type="submit"
             className="text-white bg-black border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg"

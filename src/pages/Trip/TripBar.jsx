@@ -46,6 +46,9 @@ export default function TripBar() {
     async function savePlan() {
       try {
         console.log("sending plan save  request ...........");
+        console.log('plan to save ',currentPlan)
+        //print the user email
+        console.log("user email : ", user.email);
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/planner/save`,
           {

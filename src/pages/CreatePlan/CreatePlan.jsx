@@ -6,7 +6,7 @@ import Header_home from "../../components/Headers/Header_home";
 
 export default function CreatePlan() {
   return (
-    <div className="createPlanBody">
+    <div className="bg-gray-100 createPlanBody">
       <Header_home />
       <CreatePlanBody />
     </div>

@@ -4,7 +4,7 @@ import {
   setDestinations,
   setEndDate,
   setStartDate,
-  setNoOfGuests,
+  setTotalBudget,
 } from "../../redux/features/plan-slice"; // this is the plan slice where I will store the plan
 import { useDispatch } from "react-redux"; // dispatch is used to call the setPlan function, it can not be called automatically
 
@@ -15,7 +15,7 @@ function HeroForm() {
   const [dests, setDests] = useState([""]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [guests, setGuests] = useState("");
+  const [budget, setBudget] = useState("");
 
   const dispatch = useDispatch(); // declaring the dispatch hook
 
@@ -39,8 +39,8 @@ function HeroForm() {
     setEndDate(e.target.value);
   };
 
-  const handleGuestsChange = (e) => {
-    setGuests(e.target.value);
+  const handleBudgetChange = (e) => {
+    setBudget(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -49,12 +49,12 @@ function HeroForm() {
       destinations: dests.map((dest) => dest),
       startDate,
       endDate,
-      guests,
+      budget,
     };
     dispatch(setDestinations(formData.destinations));
     dispatch(setStartDate(formData.startDate));
     dispatch(setEndDate(formData.endDate));
-    dispatch(setNoOfGuests(formData.guests));
+    dispatch(setTotalBudget(formData.budget));
     // print the form data
     // console.log("data in hero form : ", formData);
     navigateTo("/day_by_day");
@@ -116,10 +116,10 @@ function HeroForm() {
         <input
           type="number"
           name="guest_num"
-          value={guests}
-          onChange={handleGuestsChange}
+          value={budget}
+          onChange={handleBudgetChange}
           className="input-field-guests"
-          placeholder="Guests"
+          placeholder="Your Approximate Budget"
           required
         />
         <div className="button-box">

@@ -80,6 +80,13 @@ export default function Header_home() {
     const substringBeforeAtSymbol = parts[0];
     navigateTo(`/${substringBeforeAtSymbol}/myPlans`);
   };
+  const handleSearchForTours = (e) => {
+    e.preventDefault();
+    const email = user.email;
+    const parts = email.split("@");
+    const substringBeforeAtSymbol = parts[0];
+    navigateTo(`/${substringBeforeAtSymbol}/tourBuddies`);
+  };
   return (
     <header className={`text-gray-800 bg-transparent fixed w-full top-0 z-10`}>
       {!user && (
@@ -107,7 +114,7 @@ export default function Header_home() {
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <NavLink
           to="/"
-          className={`flex title-font font-medium items-center mb-4 md:mb-0 text-white`}
+          className={`flex title-font font-medium items-center mb-4 md:mb-0 text-white mr-10`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -124,8 +131,8 @@ export default function Header_home() {
           <span className={`ml-3 text-xl text-white`}>Visit Bangladesh</span>
         </NavLink>
         <form className="flex flex-grow items-center justify-center">
-          <div className="relative w-3/5 flex flex-row items-center justify-center">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <div className="relative w-full flex flex-row items-center justify-center mr-5">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none ">
               <svg
                 className="w-4 h-4 text-gray-100 dark:text-gray-400"
                 aria-hidden="true"
@@ -159,6 +166,16 @@ export default function Header_home() {
             </button>
           </div>
         </form>
+        {user && (
+          <NavLink>
+            <button
+              onClick={handleSearchForTours}
+              className={`inline-flex text-white items-center bg-transparent border-2 pl-6 pr-6 py-2 px-4 focus:outline-none hover:bg-gray-800 hover:text-white rounded-full text-base mt-4 mr-4 md:mt-0`}
+            >
+              Search for Tours
+            </button>
+          </NavLink>
+        )}
         {!user && (
           <NavLink>
             <button

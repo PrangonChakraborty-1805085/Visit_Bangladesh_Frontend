@@ -83,6 +83,16 @@ export default function DayByDayPlan({ plann }) {
           </div>
           <div className="w-3/6 flex flex-col items-center pt-2 ">
             {plann.daybyday.map((daybydayplan, index) => {
+              //now check if every event in the cluster of this daybydayplan, the checklist is "true"
+              //if it is true then make the opacity of the whole daybydayplan 0
+              //else make it 1
+              let allTrue = true;
+              for (let i = 0; i < daybydayplan.cluster.length; i++) {
+                if (daybydayplan.cluster[i].checklist !== "true") {
+                  allTrue = false;
+                  break;
+                }
+              }
               const presentId = "target-component " + index;
               const date = new Date(daybydayplan.date);
               const month = monthNames[date.getMonth()];
@@ -116,7 +126,9 @@ export default function DayByDayPlan({ plann }) {
                         dispatch(setEditPlan(state));
                         navigateTo("edit");
                       }}
-                      className="text-white bg-gray-800 border-0 py-2 px-5 focus:outline-none hover:bg-gray-700 rounded-2xl text-lg"
+                      className={`text-white bg-gray-800 border-0 ${
+                        allTrue ? "opacity-0" : "opacity-1"
+                      } py-2 px-5 focus:outline-none hover:bg-gray-700 rounded-2xl text-lg`}
                     >
                       Edit
                     </button>
@@ -124,7 +136,13 @@ export default function DayByDayPlan({ plann }) {
                   {daybydayplan.cluster.map((event, index) => {
                     if (event.id >= 0)
                       return (
-                        <div>
+                        <div
+                          className={`${
+                            event.checklist === "true"
+                              ? `opacity-30`
+                              : `opacity-100`
+                          }`}
+                        >
                           {index > 0 && (
                             <div className="container  flex flex-row items-center justify-start p-2  cursor-pointer">
                               <MdDriveEta className="text-lg text-black mr-5" />
@@ -136,7 +154,7 @@ export default function DayByDayPlan({ plann }) {
                           <TouristSpotCard key={index} event={event} />
                         </div>
                       );
-                    else return <RestuarantCard key={index} event={event} />
+                    else return <RestuarantCard key={index} event={event} />;
                   })}
                   <HotelCard key={index} event={daybydayplan.hotel} />
                   {daybydayplan.travel && (

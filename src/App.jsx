@@ -19,6 +19,10 @@ import DestinationDescription from "./pages/DestinationDescription/DestinationDe
 import EditPlan from "./pages/EditPlan/EditPlan";
 import EditDestinations from "./pages/EditDestinations/EditDestinations";
 import ShowAllPlans from "./pages/ShowAllPlans/ShowAllPlans";
+import TourBuddies from "./pages/TourBuddies/TourBuddies";
+import TourBuddy from "./pages/TourBuddies/TourBuddy";
+import AllPlans from "./pages/CreateAllPlans/AllPlans";
+// import emailjs from "@emailjs/browser";
 
 // Define the ScrollToTopOnRouteChange component
 function ScrollToTopOnRouteChange() {
@@ -44,6 +48,23 @@ const router = createBrowserRouter(
         }
       />
       <Route
+        path="tourBuddy"
+        element={
+          <>
+            <TourBuddy />
+          </>
+        }
+      />
+      <Route
+        path=":username/allPlans"
+        element={
+          <>
+            {/* <MapContainer /> */}
+            <AllPlans />
+          </>
+        }
+      />
+      <Route
         path=":username/trip"
         element={
           <>
@@ -57,6 +78,14 @@ const router = createBrowserRouter(
         element={
           <>
             <ShowAllPlans />
+          </>
+        }
+      />
+      <Route
+        path=":username/tourBuddies"
+        element={
+          <>
+            <TourBuddies />
           </>
         }
       />

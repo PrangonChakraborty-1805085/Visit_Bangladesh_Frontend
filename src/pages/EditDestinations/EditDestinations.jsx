@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setDestinations,
   setEndDate,
-  setNoOfGuests,
   setPlan,
+  setPreferences,
   setStartDate,
+  setTotalBudget,
 } from "../../redux/features/plan-slice";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
@@ -39,23 +40,20 @@ export default function EditDestinations() {
   const [user, loading, error] = useAuthState(auth);
 
   // current location of user
-  const currentUserBrowsingCity = useSelector(
-    (state) => state.persistedPlanReducer.value.userLocation
-  );
+  // const currentUserBrowsingCity = useSelector(
+  //   (state) => state.persistedPlanReducer.value.userLocation
+  // );
 
   //already selected destinations from plan slice
   const alreadySelectedDestinations = useSelector(
     (state) => state.persistedPlanReducer.value.destinations
   );
-  const alreadySelectedStartDate = useSelector(
-    (state) => state.persistedPlanReducer.value.start_date
-  );
-  const alreadySelectedEndDate = useSelector(
-    (state) => state.persistedPlanReducer.value.end_date
-  );
-  const alreadySelectedNoOfGuests = useSelector(
-    (state) => state.persistedPlanReducer.value.noOfGuests
-  );
+  // const alreadySelectedStartDate = useSelector(
+  //   (state) => state.persistedPlanReducer.value.start_date
+  // );
+  // const alreadySelectedEndDate = useSelector(
+  //   (state) => state.persistedPlanReducer.value.end_date
+  // );
 
   //naviagtion helper
   const navigateTo = useNavigate();
@@ -64,7 +62,7 @@ export default function EditDestinations() {
   const [dests, setDests] = useState(alreadySelectedDestinations);
   const [starttDate, setStarttDate] = useState("");
   const [enddDate, setEnddDate] = useState("");
-  const [guests, setGuests] = useState("");
+  const [budget, setBudget] = useState("");
 
   //create a state to handle selected destinations
   const [selectedDestinations, setSelectedDestinations] = useState(
@@ -73,6 +71,33 @@ export default function EditDestinations() {
 
   const handleAddDestination = () => {
     setDests([...dests, ""]);
+  };
+
+  //preferences
+  const preferences = [
+    "Beach",
+    "Mountain",
+    "Historical",
+    "Museum",
+    "Water",
+    "Nightlife",
+    "Locality",
+    "Wildlife",
+    "Nature",
+  ];
+  const [selectedPreferences, setSelectedPreferences] = useState([]);
+
+  const handleCheckboxChange = (event) => {
+    const preference = event.target.value;
+    if (event.target.checked) {
+      // If the checkbox is checked, add the preference to the selectedPreferences array
+      setSelectedPreferences((prevState) => [...prevState, preference]);
+    } else {
+      // If the checkbox is unchecked, remove the preference from the selectedPreferences array
+      setSelectedPreferences((prevState) =>
+        prevState.filter((item) => item !== preference)
+      );
+    }
   };
 
   // filter the allLocations and make a new array containing only those locations whose name matches with the alreadySelectedDestinations
@@ -137,8 +162,8 @@ export default function EditDestinations() {
     setEnddDate(e.target.value);
   };
 
-  const handleGuestsChange = (e) => {
-    setGuests(e.target.value);
+  const handleBudgetChange = (e) => {
+    setBudget(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -152,10 +177,12 @@ export default function EditDestinations() {
     const todayDateObject = new Date(todayDateString);
     const startDateObject = new Date(starttDate);
     const endDateObject = new Date(enddDate);
-    if (startDateObject < todayDateObject) {
-      alert("Start date can not be before today");
-      return;
-    }
+
+    //TODO:modified for demonstration purpose
+    // if (startDateObject < todayDateObject) {
+    //   alert("Start date can not be before today");
+    //   return;
+    // }
     if (endDateObject < todayDateObject) {
       alert("End date can not be before today");
       return;
@@ -164,17 +191,22 @@ export default function EditDestinations() {
       alert("End date can not be before start date");
       return;
     }
+    if (budget < 3000) {
+      alert("Budget is too low");
+      return;
+    }
 
     const formData = {
       destinations: selectedDestinations.map((dest) => dest),
       starttDate,
       enddDate,
-      guests,
+      budget,
     };
     dispatch(setDestinations(formData.destinations));
     dispatch(setStartDate(formData.starttDate));
     dispatch(setEndDate(formData.enddDate));
-    dispatch(setNoOfGuests(formData.guests));
+    dispatch(setPreferences(selectedPreferences));
+    dispatch(setTotalBudget(formData.budget));
 
     //set the initial plan to null so that we can now create a new plan
     dispatch(setPlan(null));
@@ -184,11 +216,11 @@ export default function EditDestinations() {
     // console.log("current user : ", username);
     if (!user) {
       // If user is logged in, navigate to username/day_by_day
-      navigateTo("/random/trip");
+      navigateTo("/random/allPlans");
     } else {
       // get the letters before '@' from the email
       const username = user.email.split("@")[0];
-      navigateTo(`/${username}/trip`);
+      navigateTo(`/${username}/allPlans`);
       // If user is not logged in, navigate to random/day_by_day
     }
   };
@@ -282,13 +314,35 @@ export default function EditDestinations() {
                 <input
                   type="number"
                   name="guest_num"
-                  value={guests}
-                  onChange={handleGuestsChange}
+                  value={budget}
+                  onChange={handleBudgetChange}
                   className="w-full p-[2%] md:p-[2%] lg:p-[2%] xl:p-[2%] my-1 md:my-1 lg:my-1 xl:my-1 border-[1px] border-gray-300 rounded outline-black"
-                  placeholder="Guests"
+                  placeholder="Your Approximate Budget"
                   required
                 />
                 {/* </div> */}
+                <div className="grid grid-cols-3 gap-4 mt-3 mb-3">
+                  {/* make checkbox for each options in the preferences */}
+                  {preferences.map((preference, index) => {
+                    return (
+                      <div key={index} className="flex items-center">
+                        <input
+                          type="checkbox"
+                          name={preference}
+                          value={preference}
+                          onChange={handleCheckboxChange}
+                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                        />
+                        <label
+                          htmlFor={preference}
+                          className="ml-2 block text-sm text-gray-900"
+                        >
+                          {preference}
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
                 <button
                   type="submit"
                   className="text-white bg-black border-0 py-2 px-8 focus:outline-none hover:bg-gray-800 rounded text-lg"

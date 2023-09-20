@@ -18,7 +18,11 @@ import {
   setSuggestions,
 } from "../../redux/features/edit-plan-slice";
 import PlanSuggestionsLoading from "./PlanSuggestionsLoading";
-import { setPlan } from "../../redux/features/plan-slice";
+import {
+  setFirstPlan,
+  setPlan,
+  setSecondPlan,
+} from "../../redux/features/plan-slice";
 // import axios from "axios";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
@@ -388,6 +392,11 @@ export default function EditPlan() {
                     //updating the final plan
                     setTimeout(() => {
                       dispatch(setPlan(jsonData));
+                      if (jsonData.planID === -1) {
+                        dispatch(setFirstPlan(jsonData));
+                      } else {
+                        dispatch(setSecondPlan(jsonData));
+                      }
                       dispatch(resetSuggestions());
                       dispatch(resetEditPlan());
                     }, 2000); // Simulated delay of 2 seconds
