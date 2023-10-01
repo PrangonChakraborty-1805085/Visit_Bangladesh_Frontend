@@ -11,7 +11,7 @@ export default function ShowAllPlans() {
   const [plansloading, setPlansLoading] = useState(true);
   console.log("User", user);
   //print plansloading
-  console.log("plans loading ", plansloading);
+  console.log("plans loading... ", plansloading);
   useEffect(() => {
     async function fetchMyPlans() {
       try {
