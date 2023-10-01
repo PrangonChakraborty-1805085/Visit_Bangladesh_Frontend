@@ -84,6 +84,16 @@ export default function Trip() {
                   endCity="Dhaka"
                   destinations={plann.destinations}
                 />
+                <h1 className="pt-10 text-gray-600 text-2xl">
+                  Estimated Total Cost
+                  <span className="font-bold text-black text-2xl">
+                    {" "}
+                    {Math.ceil(plann.totalCost)} Taka
+                  </span>
+                </h1>
+                <h6 className="pt-2 text-gray-600">
+                  (includes hotel,travel,food cost)
+                </h6>
                 <button
                   onClick={(e) => {
                     e.preventDefault();

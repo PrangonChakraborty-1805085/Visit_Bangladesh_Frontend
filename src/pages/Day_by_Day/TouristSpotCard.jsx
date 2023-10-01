@@ -27,12 +27,17 @@ export default function TouristSpotCard({ event }) {
               precision={0.5}
               readOnly
             />
-            <h1 className="">{event.rating}</h1>
+            {/* <h1 className="">{event.rating}</h1> */}
           </div>
           <h1 className="text-gray-500  pb-1">
             {" "}
             {event.description.substring(0, event.description.indexOf(".") + 1)}
           </h1>
+          {event.cost > 0 && (
+            <h1 className="text-gray-950 text-base font-bold pb-1">
+              Approx. Cost {Math.ceil(event.cost)} Taka
+            </h1>
+          )}
         </div>
       </div>
     </div>
