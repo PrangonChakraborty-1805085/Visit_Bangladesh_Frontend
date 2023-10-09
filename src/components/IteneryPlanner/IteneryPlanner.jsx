@@ -24,7 +24,7 @@ export default function IteneryPlanner() {
   const [dests, setDests] = useState([""]);
   const [starttDate, setStarttDate] = useState("");
   const [enddDate, setEnddDate] = useState("");
-  const [budget, setBudget] = useState("");
+  const [budget, setBudget] = useState(0);
 
   //create a state to handle selected destinations
   const [selectedDestinations, setSelectedDestinations] = useState([]);
