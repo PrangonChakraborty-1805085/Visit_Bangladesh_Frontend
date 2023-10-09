@@ -24,7 +24,7 @@ export default function Mail({ email }) {
         message: message,
       });
       console.log("here I am ", user.email);
-      alert("email successfully sent check inbox");
+      alert("email successfully sent..Check mail for further communication");
     } catch (error) {
       console.log(error);
     } finally {
