@@ -59,18 +59,18 @@ export default function AllPlans() {
           }
         );
         const jsonData = await response.json();
-        console.log("plan got from backend ", jsonData);
-        //! default setting of destinations to the 1st plan from plans
+        // console.log("plan got from backend ", jsonData);
+        //! default setting of destinations to the 2nd plan from plans
         setTimeout(() => {
           let filterdDestinations = [];
-          for (let j = 0; j < jsonData[0].destinations.length - 1; j++) {
+          for (let j = 0; j < jsonData[1].destinations.length - 1; j++) {
             //! modified
-            filterdDestinations.push(jsonData[0].destinations[j]);
+            filterdDestinations.push(jsonData[1].destinations[j]);
           }
           let resultDestinations = [];
-          for (let j = 0; j < jsonData[0].destinations.length - 1; j++) {
+          for (let j = 0; j < jsonData[1].destinations.length - 1; j++) {
             //! modified
-            resultDestinations.push(jsonData[0].destinations[j].name);
+            resultDestinations.push(jsonData[1].destinations[j].name);
           }
           setMapDestinations(filterdDestinations);
           setMapLoading(false);
@@ -91,29 +91,29 @@ export default function AllPlans() {
       console.log("plan is not saved so calling ");
       fetchData();
     } else if (planDatas && mapLoading == true) {
-      //! default setting of destinations to the 1st plan from plans
+      //! default setting of destinations to the 2nd plan from plans
       console.log("-------again printing my plan ", planDatas);
 
       setTimeout(() => {
         let filterdDestinations = [];
-        for (let j = 0; j < planDatas[0].destinations.length - 1; j++) {
+        for (let j = 0; j < planDatas[1].destinations.length - 1; j++) {
           //! modified
-          filterdDestinations.push(planDatas[0].destinations[j]);
+          filterdDestinations.push(planDatas[1].destinations[j]);
         }
         let resultDestinations = [];
-        for (let j = 0; j < planDatas[0].destinations.length - 1; j++) {
+        for (let j = 0; j < planDatas[1].destinations.length - 1; j++) {
           //! modified
-          resultDestinations.push(planDatas[0].destinations[j].name);
+          resultDestinations.push(planDatas[1].destinations[j].name);
         }
         setMapDestinations(filterdDestinations);
         dispatch(setDestinations(resultDestinations));
-        console.log("-------again printing my plan 1 ", planDatas);
+        // console.log("-------again printing my plan 1 ", planDatas);
 
         setPlanns(planDatas); //! modified
         setMapLoading(false);
         setPlansLoading(false);
       }, 2000); // Simulated delay of 2 seconds
-      console.log("-------again printing my plan 2 ", planDatas);
+      // console.log("-------again printing my plan 2 ", planDatas);
       // console.log("budget of plan0 ", planns[0].totalCost);
       // console.log("budget of plan0 ", planns[1].totalCost);
     }
