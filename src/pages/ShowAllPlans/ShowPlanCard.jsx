@@ -91,7 +91,7 @@ export default function ShowPlanCard({ plan }) {
                       },
                     }
                   );
-                  const jsonData = await response.json();
+                  // const jsonData = await response.json();
                   //   console.log("plan got from backend ", jsonData);
                   // const email = user.email;
                   // const parts = email.split("@");
