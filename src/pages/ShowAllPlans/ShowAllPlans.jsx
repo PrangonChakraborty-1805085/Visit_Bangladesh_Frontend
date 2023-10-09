@@ -15,7 +15,7 @@ export default function ShowAllPlans() {
   useEffect(() => {
     async function fetchMyPlans() {
       try {
-        console.log("sending request to fetch my all plans ...........");
+        console.log("sending request to fetch my all plans ............");
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/planner/getplans?email=${
             user.email
